@@ -108,6 +108,7 @@ void setup() {
 
   SerialCommandHandler.AddCommand(F("Re-initialise"), Cmd_Reinitialise);
   SerialCommandHandler.AddCommand(F("Save"), Cmd_Save_settings);
+  SerialCommandHandler.AddCommand(F("Set", Set_Variable))
   // SerialCommandHandler.AddCommand(F("NTC_CS="), Cmd_Set_NTC_CS); //EDITME add function
 
   Core0_boot_flag = 1;        //Flag to make Core1 wait for Core0
