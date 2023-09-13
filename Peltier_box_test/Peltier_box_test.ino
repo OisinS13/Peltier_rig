@@ -17,6 +17,7 @@ uint16_t PID_Time_Step_mS = 1000;                                  //Time betwee
 const double PID_Setpoint_default = 25.0;                          //Default values to start at if not told otherwise by user or config file
 const double PID_Output_Min_default = -4095;                       //Max supported by hardware (PWM driver adafruit 815)
 const double PID_Output_Max_default = 4095;                        //Max supported by hardware (PWM driver adafruit 815)
+char PID_Input_map[MAX_Num_Driver_boards][Drivers_per_board][2];
 AutoPID *PID[MAX_Num_Driver_boards][Drivers_per_board];            //Pointer arrays initialised at compile time so that objects/variables can be created at runtime, allowing hardware re-configuration without re-flashing software
 double *PID_Input[MAX_Num_Driver_boards][Drivers_per_board];       //Will point to relevant member of NTC_T_readings (i.e. which input channel controls which output driver)
 double *PID_Setpoint[MAX_Num_Driver_boards][Drivers_per_board];    //Target temperature in Celsius
@@ -81,11 +82,15 @@ bool RTC_flag = 0;         //Flag to indicate RTC successfully booted
 bool file_ready_flag = 0;  //EDITME not currently used?
 bool Verbose_output = 1;   //Flag for debugging messages
 
+uint32_t Debugging_timestamps[100];
+uint8_t Debugging_timestamp_position=0;
+
 //Functions with optional arguements need to be given a prototype before setup() because IDE is odd
 uint8_t Load_settings_uint8(uint8_t Default_value, char *Name, uint8_t Board_number = 255, uint8_t Channel_number = 255);
 uint16_t Load_settings_uint16(uint16_t Default_value, char Name[KEY_MAX_LENGTH - 10], uint8_t Board_number = 255, uint8_t Channel_number = 255);
 double Load_settings_double(double Default_value, char Name[KEY_MAX_LENGTH - 10], uint8_t Board_number = 255, uint8_t Channel_number = 255);
-double *Load_settings_string_pointer(double *Default_value, char Name[KEY_MAX_LENGTH - 10], uint8_t Board_number = 255, uint8_t Channel_number = 255);
+double* Load_settings_string_pointer(double* Default_value, char Name[KEY_MAX_LENGTH - 10], uint8_t Board_number, uint8_t Channel_number);
+
 
 void setup() {
   delay(1000);

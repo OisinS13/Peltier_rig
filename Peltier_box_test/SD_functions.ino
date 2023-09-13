@@ -73,23 +73,27 @@ bool SD_available(char *key) {
 int SD_findInt(char *key) {
   char value_string[VALUE_MAX_LENGTH];
   int value_length = SD_findKey(key, value_string);
+  //Take_debugging_timestamps();
   return HELPER_ascii2Int(value_string, value_length);
 }
 
 float SD_findFloat(char *key) {
   char value_string[VALUE_MAX_LENGTH];
   int value_length = SD_findKey(key, value_string);
+  //Take_debugging_timestamps();
   return HELPER_ascii2Float(value_string, value_length);
 }
 
 String SD_findString(char *key) {
   char value_string[VALUE_MAX_LENGTH];
   int value_length = SD_findKey(key, value_string);
+  //Take_debugging_timestamps();
   return HELPER_ascii2String(value_string, value_length);
 }
 
 int SD_findKey(char *key, char *value) {
   File32 configFile = SD.open(FILE_NAME);
+  //Take_debugging_timestamps();//2
 
   if (!configFile) {
     Serial.print(F("SD Card: error on opening file "));
@@ -111,12 +115,12 @@ int SD_findKey(char *key, char *value) {
     if (ch != 0)
       key_string[key_length++] = ch;
   } while (ch != 0);
-
+  //Take_debugging_timestamps();
   // check line by line
   while (configFile.available()) {
     int buffer_length = configFile.readBytesUntil(',', SD_buffer, 100);
-    if (SD_buffer[buffer_length - 1] == '\r')
-      buffer_length--;  // trim the \r
+    // if (SD_buffer[buffer_length - 1] == '\r')
+    //   buffer_length--;  // trim the \r
 
     if (buffer_length > (key_length + 1)) {                  // 1 is = character
       if (memcmp(SD_buffer, key_string, key_length) == 0) {  // equal
@@ -127,7 +131,9 @@ int SD_findKey(char *key, char *value) {
         }
       }
     }
+    //Take_debugging_timestamps();
   }
+  //Take_debugging_timestamps();//3
 
   configFile.close();  // close the file
   return value_length;
@@ -193,55 +199,74 @@ String HELPER_ascii2String(char *ascii, int length) {
 bool Save_settings_to_file(const char *Filename) {
 
   File32 Settings_save_file;
-  if (!Settings_save_file.open("test_save.txt", O_RDWR | O_CREAT | O_TRUNC)) {
+  if (!Settings_save_file.open(Filename, O_RDWR | O_CREAT | O_TRUNC)) {
     if (Verbose_output) {
       Serial.println("Settings save file open failed");
     }
     return 0;
   }
 
-  char Data_to_file[200] = "\n";  //Initialise char array, beginning with a new line character
-  Data_to_file[1] = ',';
-  int j = 2;  //starts at 1 to account for newline chracter
+  char Data_to_file[200] = ",";  //Initialise char array, beginning with a new line character
+  // Data_to_file[1] = ',';
+  int j = 1;  //starts at 1 to account for newline chracter
 
-    j += sprintf(&Data_to_file[j], "Num_NTC_boards=%u,", Num_NTC_boards);  //Append a reading, and then a delimeter
-    j += sprintf(&Data_to_file[j], "Num_Driver_boards=%u,", Num_Driver_boards);  //Append a reading, and then a delimeter
-    j += sprintf(&Data_to_file[j], "PID_Time_Step_mS=%u,", PID_Time_Step_mS);  //Append a reading, and then a delimeter
+  j += sprintf(&Data_to_file[j], "Num_NTC_boards=%u,", Num_NTC_boards);        //Append a reading, and then a delimeter
+  j += sprintf(&Data_to_file[j], "Num_Driver_boards=%u,", Num_Driver_boards);  //Append a reading, and then a delimeter
+  j += sprintf(&Data_to_file[j], "PID_Time_Step_mS=%u,", PID_Time_Step_mS);    //Append a reading, and then a delimeter
 
-Serial.println(Data_to_file);
-    logfile.write(Data_to_file,j);                       //Write the whole data string to the file
-    logfile.sync();                                        //Save data to disc
-    logfile.close();
+  // Serial.println(Data_to_file);
+  Settings_save_file.write(&Data_to_file, j);  //Write the whole data string to the file
+  Settings_save_file.sync();                   //Save data to disc
 
-  // //Initialise input board settings, loading from SD file where available and using defaults otherwise
-  // for (uint8_t board = 0; board < Num_NTC_boards; board++) {
-  //   NTC_CS[board] = new uint8_t(NTC_CS_pins[Load_settings_uint8(board, "NTC_CS\0", board)]);  //Assumes NTC input boards use DIP switch addresses of 0 upwards, no gaps and in order
-  //   NTC_V_ref[board] = new double(Load_settings_double(NTC_V_ref_default, "NTC_V_ref\0", board));
-  //   for (uint8_t channel = 0; channel < Inputs_per_board; channel++) {
-  //     NTC_RT0[board][channel] = new uint16_t(Load_settings_uint16(NTC_RT0_default, "NTC_RT0\0", board, channel));
-  //     NTC_Beta[board][channel] = new uint16_t(Load_settings_uint16(NTC_Beta_default, "NTC_Beta\0", board, channel));
-  //     NTC_R1[board][channel] = new uint16_t(Load_settings_uint16(NTC_R1_default, "NTC_R1\0", board, channel));
-  //     NTC_R_inf[board][channel] = new double(*NTC_RT0[board][channel] * exp((0.0 - *NTC_Beta[board][channel]) / NTC_T0));
-  //     NTC_Raw_Readings[board][channel] = new uint16_t(0);
-  //     NTC_R_readings[board][channel] = new double(0);
-  //     NTC_T_readings[board][channel] = new double(0);
-  //   }
-  // }
+  // //Save input board settings to SD
+  for (uint8_t board = 0; board < Num_NTC_boards; board++) {
+    memset(&Data_to_file[0], 0, 200);
+    Data_to_file[0] = '\n';
+    Data_to_file[1] = ',';
+    j = 2;
+    j += sprintf(&Data_to_file[j], "NTC_CS_%c=%u,", board + 65, *NTC_CS[board]);        //Append a reading, and then a delimeter
+    j += sprintf(&Data_to_file[j], "NTC_V_ref_%c=%f,", board + 65, *NTC_V_ref[board]);  //Append a reading, and then a delimeter //EDITME check if this uses DIP address or pin number
+    Settings_save_file.write(&Data_to_file, j);                                         //Write the whole data string to the file
+    Settings_save_file.sync();                                                          //Save data to disc
+    for (uint8_t channel = 0; channel < Inputs_per_board; channel++) {
+      memset(&Data_to_file[0], 0, 200);
+      Data_to_file[0] = '\n';
+      Data_to_file[1] = ',';
+      j = 2;
 
-  // //Initialise output board settings, loading from SD file where available and using defaults otherwise
-  // for (uint8_t board = 0; board < Num_Driver_boards; board++) {
-  //   for (uint8_t driver = 0; driver < Drivers_per_board; driver++) {
-  //     PID_Input[board][driver] = Load_settings_string_pointer(NTC_T_readings[board][driver], "PID_Input\0", board, driver);  //Assumes outputs are controlled by corresponding inputs. A1 to A1, B3 to B3 etc
-  //     PID_Setpoint[board][driver] = new double(Load_settings_double(NTC_V_ref_default, "PID_Setpoint\0", board, driver));
-  //     PID_Output[board][driver] = new double();
-  //     PID_Output_Min[board][driver] = new double(Load_settings_double(PID_Output_Min_default, "PID_Output_Min\0", board, driver));
-  //     PID_Output_Max[board][driver] = new double(Load_settings_double(PID_Output_Max_default, "PID_Output_Max\0", board, driver));
-  //     PID_KP[board][driver] = new double(Load_settings_double(0, "PID_KP\0", board, driver));  //Guessing gain values is shooting blind, jsut set to 0 until told otherwise and channel won't output anything
-  //     PID_KI[board][driver] = new double(Load_settings_double(0, "PID_KI\0", board, driver));
-  //     PID_KD[board][driver] = new double(Load_settings_double(0, "PID_KD\0", board, driver));
-  //     PID[board][driver] = new AutoPID(PID_Input[board][driver], PID_Setpoint[board][driver], PID_Output[board][driver], *PID_Output_Min[board][driver], *PID_Output_Max[board][driver], *PID_KP[board][driver], *PID_KI[board][driver], *PID_KD[board][driver]);  //Initialise PID objects with appropriate arguments
-  //   }
-  // }
+      j += sprintf(&Data_to_file[j], "NTC_RT0_%c%u=%u,", board + 65, channel, *NTC_RT0[board][channel]);    //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "NTC_Beta_%c%u=%u,", board + 65, channel, *NTC_Beta[board][channel]);  //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "NTC_R1_%c%u=%u,", board + 65, channel, *NTC_R1[board][channel]);      //Append a reading, and then a delimeter
 
-   return 1;
+      Settings_save_file.write(&Data_to_file, j);  //Write the whole data string to the file
+      Settings_save_file.sync();                   //Save data to disc
+    }
+  }
+
+  //Save output board settingsto SD
+  for (uint8_t board = 0; board < Num_Driver_boards; board++) {
+    for (uint8_t driver = 0; driver < Drivers_per_board; driver++) {
+
+      memset(&Data_to_file[0], 0, 200);
+      Data_to_file[0] = '\n';
+      Data_to_file[1] = ',';
+      j = 2;
+
+      j += sprintf(&Data_to_file[j], "PID_Input_%c%u=%c%c,", board + 65, driver, PID_Input_map[board][driver][0], PID_Input_map[board][driver][1]);  //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "PID_Setpoint_%c%u=%f,", board + 65, driver, *PID_Setpoint[board][driver]);                                                                   //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "PID_Output_Min_%c%u=%f,", board + 65, driver, *PID_Output_Min[board][driver]);                                                               //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "PID_Output_Max_%c%u=%f,", board + 65, driver, *PID_Output_Max[board][driver]);                                                               //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "PID_KP_%c%u=%f,", board + 65, driver, *PID_KP[board][driver]);                                                               //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "PID_KI_%c%u=%f,", board + 65, driver, *PID_KI[board][driver]);                                                               //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "PID_KD_%c%u=%f,", board + 65, driver, *PID_KD[board][driver]);                                                               //Append a reading, and then a delimeter
+
+
+      Settings_save_file.write(&Data_to_file, j);  //Write the whole data string to the file
+      Settings_save_file.sync();                   //Save data to disc
+    }
+  }
+
+  Settings_save_file.close();
+
+  return 1;
 }
