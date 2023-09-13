@@ -144,8 +144,8 @@ double* Load_settings_string_pointer(double* Default_value, char Name[KEY_MAX_LE
       Serial.print(Key_to_find);
       Serial.println(" not found, default value used");
     }
-    PID_Input_map[Board_number][Channel_number][0] = Board_number + 65;
-    PID_Input_map[Board_number][Channel_number][1] = Channel_number + 48;
+    *PID_Input_map[Board_number][Channel_number][0] = Board_number + 65;
+    *PID_Input_map[Board_number][Channel_number][1] = Channel_number + 48;
     //Take_debugging_timestamps();
     return Default_value;
   } else {
@@ -159,8 +159,8 @@ double* Load_settings_string_pointer(double* Default_value, char Name[KEY_MAX_LE
       }
       //EDITME insert return pointer code
       //Take_debugging_timestamps();
-      PID_Input_map[Board_number][Channel_number][0] = Board_pointer + 65;
-      PID_Input_map[Board_number][Channel_number][1] = Channel_pointer + 48;
+      *PID_Input_map[Board_number][Channel_number][0] = Board_pointer + 65;
+      *PID_Input_map[Board_number][Channel_number][1] = Channel_pointer + 48;
       return NTC_T_readings[Board_pointer][Channel_pointer];
     } else {
       if (Verbose_output) {
@@ -168,8 +168,8 @@ double* Load_settings_string_pointer(double* Default_value, char Name[KEY_MAX_LE
         Serial.println(" outside accepted range, default value used");
       }
       //Take_debugging_timestamps();
-      PID_Input_map[Board_number][Channel_number][0] = Board_number + 65;
-      PID_Input_map[Board_number][Channel_number][1] = Channel_number + 48;
+      *PID_Input_map[Board_number][Channel_number][0] = Board_number + 65;
+      *PID_Input_map[Board_number][Channel_number][1] = Channel_number + 48;
       return Default_value;
     }
   }

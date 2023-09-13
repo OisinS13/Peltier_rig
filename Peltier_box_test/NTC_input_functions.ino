@@ -23,7 +23,7 @@ void Read_NTC_inputs() {
     Previous_Read_Time_Millis = Current_Time_Millis;
     for (uint8_t board = 0; board < Num_NTC_boards; board++) {
       for (uint8_t channel = 0; channel < Inputs_per_board; channel++) {
-        *NTC_Raw_Readings[board][channel] = Read_MCP3304(channel, *NTC_CS[board]);
+        *NTC_Raw_Readings[board][channel] = Read_MCP3304(channel, *NTC_CS_DIP[board]);
         *NTC_R_readings[board][channel] = ADC_to_R(*NTC_Raw_Readings[board][channel], *NTC_R1[board][channel]);
         *NTC_T_readings[board][channel] = R_to_Celsius(*NTC_R_readings[board][channel], *NTC_R_inf[board][channel], *NTC_Beta[board][channel]);
       }

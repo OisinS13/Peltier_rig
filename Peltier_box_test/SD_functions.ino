@@ -224,7 +224,7 @@ bool Save_settings_to_file(const char *Filename) {
     Data_to_file[0] = '\n';
     Data_to_file[1] = ',';
     j = 2;
-    j += sprintf(&Data_to_file[j], "NTC_CS_%c=%u,", board + 65, *NTC_CS[board]);        //Append a reading, and then a delimeter
+    j += sprintf(&Data_to_file[j], "NTC_CS_%c=%u,", board + 65, *NTC_CS_DIP[board]);    //Append a reading, and then a delimeter
     j += sprintf(&Data_to_file[j], "NTC_V_ref_%c=%f,", board + 65, *NTC_V_ref[board]);  //Append a reading, and then a delimeter //EDITME check if this uses DIP address or pin number
     Settings_save_file.write(&Data_to_file, j);                                         //Write the whole data string to the file
     Settings_save_file.sync();                                                          //Save data to disc
@@ -245,6 +245,17 @@ bool Save_settings_to_file(const char *Filename) {
 
   //Save output board settingsto SD
   for (uint8_t board = 0; board < Num_Driver_boards; board++) {
+    memset(&Data_to_file[0], 0, 200);
+    Data_to_file[0] = '\n';
+    Data_to_file[1] = ',';
+    j = 2;
+
+    j += sprintf(&Data_to_file[j], "Channel_autostart_flags_%c=%u,", board + 65, *Channel_output_flags[board]);  //Append a reading, and then a delimeter
+    j += sprintf(&Data_to_file[j], "PWM_driver_address_%c=%u,", board + 65, *PWM_driver_address[board]);  //Append a reading, and then a delimeter
+
+    Settings_save_file.write(&Data_to_file, j);  //Write the whole data string to the file
+    Settings_save_file.sync();                   //Save data to disc
+
     for (uint8_t driver = 0; driver < Drivers_per_board; driver++) {
 
       memset(&Data_to_file[0], 0, 200);
@@ -252,13 +263,13 @@ bool Save_settings_to_file(const char *Filename) {
       Data_to_file[1] = ',';
       j = 2;
 
-      j += sprintf(&Data_to_file[j], "PID_Input_%c%u=%c%c,", board + 65, driver, PID_Input_map[board][driver][0], PID_Input_map[board][driver][1]);  //Append a reading, and then a delimeter
-      j += sprintf(&Data_to_file[j], "PID_Setpoint_%c%u=%f,", board + 65, driver, *PID_Setpoint[board][driver]);                                                                   //Append a reading, and then a delimeter
-      j += sprintf(&Data_to_file[j], "PID_Output_Min_%c%u=%f,", board + 65, driver, *PID_Output_Min[board][driver]);                                                               //Append a reading, and then a delimeter
-      j += sprintf(&Data_to_file[j], "PID_Output_Max_%c%u=%f,", board + 65, driver, *PID_Output_Max[board][driver]);                                                               //Append a reading, and then a delimeter
-      j += sprintf(&Data_to_file[j], "PID_KP_%c%u=%f,", board + 65, driver, *PID_KP[board][driver]);                                                               //Append a reading, and then a delimeter
-      j += sprintf(&Data_to_file[j], "PID_KI_%c%u=%f,", board + 65, driver, *PID_KI[board][driver]);                                                               //Append a reading, and then a delimeter
-      j += sprintf(&Data_to_file[j], "PID_KD_%c%u=%f,", board + 65, driver, *PID_KD[board][driver]);                                                               //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "PID_Input_%c%u=%c%c,", board + 65, driver, *PID_Input_map[board][driver][0], *PID_Input_map[board][driver][1]);  //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "PID_Setpoint_%c%u=%f,", board + 65, driver, *PID_Setpoint[board][driver]);                                       //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "PID_Output_Min_%c%u=%f,", board + 65, driver, *PID_Output_Min[board][driver]);                                   //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "PID_Output_Max_%c%u=%f,", board + 65, driver, *PID_Output_Max[board][driver]);                                   //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "PID_KP_%c%u=%f,", board + 65, driver, *PID_KP[board][driver]);                                                   //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "PID_KI_%c%u=%f,", board + 65, driver, *PID_KI[board][driver]);                                                   //Append a reading, and then a delimeter
+      j += sprintf(&Data_to_file[j], "PID_KD_%c%u=%f,", board + 65, driver, *PID_KD[board][driver]);                                                   //Append a reading, and then a delimeter
 
 
       Settings_save_file.write(&Data_to_file, j);  //Write the whole data string to the file
