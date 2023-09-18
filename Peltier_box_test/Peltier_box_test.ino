@@ -108,7 +108,10 @@ void setup() {
 
   SerialCommandHandler.AddCommand(F("Re-initialise"), Cmd_Reinitialise);
   SerialCommandHandler.AddCommand(F("Save"), Cmd_Save_settings);
-  SerialCommandHandler.AddCommand(F("Set", Set_Variable))
+  SerialCommandHandler.AddCommand(F("Set", Set_Variable));
+  SerialCommandHandler.AddCommand(F("Get", Get_Variable)); // EDIT add function
+  SerialCommandHandler.AddCommand(F("Start", Start_Channel));
+  SerialCommandHandler.AddCommand(F("Stop", Stop_Channel));
   // SerialCommandHandler.AddCommand(F("NTC_CS="), Cmd_Set_NTC_CS); //EDITME add function
 
   Core0_boot_flag = 1;        //Flag to make Core1 wait for Core0
@@ -152,7 +155,7 @@ void setup1() {
 
   //EDITME add code to open default file, check if alternative file should be loaded, and load that instead. 
   //EDITME add code to open file and append "last read" timestamp ending in comma 
-  Num_NTC_boards = Load_settings_uint8(1, "Num_NTC_boards\0");        //Load number of NTC input boards from settings file, or assume just 1 until told otherwise
+  Num_NTC_boards = Load_settings_uint8(1, "Num_NTC_boards\0");        //Load number of NTC input boards from settings file, or assume just 1 until told otherwise // COMMENT: we should hard code this somehow?
   Num_Driver_boards = Load_settings_uint8(1, "Num_Driver_boards\0");  //Load number of output driver boards from settings file, or assume just 1 until told otherwise
   PID_Time_Step_mS = Load_settings_uint16(1000, "PID_Time_Step_mS\0");
 
@@ -173,7 +176,7 @@ void setup1() {
 
   //Initialise output board settings, loading from SD file where available and using defaults otherwise
   for (uint8_t board = 0; board < Num_Driver_boards; board++) {
-    Channel_output_flags[board] = new uint8_t(Load_settings_uint8(0, "Channel_autostart_flags\0", board));  //Assume all ouputs are off unless told otherwise
+    Channel_output_flags[board] = new uint8_t(Load_settings_uint8(0, "Channel_autostart_flags\0", board));  //Assume all ouputs are off unless told otherwise 
     PWM_driver_address[board] = new uint8_t(Load_settings_uint8(board, "PWM_driver_address\0", board));     //Assumes PWM drivers use solder address of 0 upwards, no gaps and in order. Addresses satart at 0x40 and increment upwards according to solder jumpers (offset handled by initiator code)
     PWM_driver[board] = new Adafruit_PWMServoDriver(*PWM_driver_address[board] + 0x40);
     PWM_driver[board]->begin();
