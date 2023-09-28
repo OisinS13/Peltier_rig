@@ -64,45 +64,36 @@ bool isValidLocation(const char* input, int& board_idx, int& channel_idx) {
   }
 }
 
-void Get_Variable(CommandParameter& Parameters) {
+void interface_Variable(CommandParameter &Parameters, bool set_status){
   const char* location_cmd = Parameters.NextParameter();
   const char* variable_cmd = Parameters.NextParameter();
 
   int board_idx, channel_idx;
   if (isValidLocation(location_cmd, board_idx, channel_idx)) {
     if (strcmp(variable_cmd, "NTC_RT0")==0) {
-      Serial.print("NTC_RT0 = ");
+      if (set_status == true){
+        NTC_RT0[board_idx][channel_idx] = new uint16_t(Parameters.NextParameterAsInteger());
+        Serial.print("NTC_RT0 updated to: ");
+      }
+      else if (set_status == false){
+        Serial.print("NTC_RT0 = ");
+      }
       Serial.println(*NTC_RT0[board_idx][channel_idx]);
-    } else if (strcmp(variable_cmd, "NTC_Beta")==0) {
-      Serial.println(String(board_idx));
     } else {
       Serial.println(F("Variable does not exist or is not board-specific."));
     }
   }
   else {
     Serial.println(F("Invalid location specified."));
-  }
+}
 }
 
-void Set_Variable(CommandParameter& Parameters) {
-  const char* location_cmd = Parameters.NextParameter();
-  const char* variable_cmd = Parameters.NextParameter();
-
-  int board_idx, channel_idx;
-  if (isValidLocation(location_cmd, board_idx, channel_idx)) {
-    if (strcmp(variable_cmd, "NTC_RT0")==0) {
-      NTC_RT0[board_idx][channel_idx] = new uint16_t(Parameters.NextParameterAsInteger());
-      Serial.print("NTC_RT0 updated to: ");
-      Serial.println(*NTC_RT0[board_idx][channel_idx]);
-      // Serial.print("NTC_RT0 = ");
-      // Serial.println(*NTC_RT0[board_idx][channel_idx]);
-    } else if (strcmp(variable_cmd, "NTC_Beta")==0) {
-      Serial.println(String(board_idx));
-    } else {
-      Serial.println(F("Variable does not exist or is not board-specific."));
-    }
-  }
-  else {
-    Serial.println(F("Invalid location specified."));
-  }
+void Get_Variable(CommandParameter &Parameters) {
+  interface_Variable(Parameters, false);
 }
+
+void Set_Variable(CommandParameter &Parameters) {
+  interface_Variable(Parameters, true);
+}
+
+
