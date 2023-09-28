@@ -79,7 +79,29 @@ void Get_Variable(CommandParameter& Parameters) {
       Serial.println(F("Variable does not exist or is not board-specific."));
     }
   }
+  else {
+    Serial.println(F("Invalid location specified."));
+  }
+}
 
+void Set_Variable(CommandParameter& Parameters) {
+  const char* location_cmd = Parameters.NextParameter();
+  const char* variable_cmd = Parameters.NextParameter();
+
+  int board_idx, channel_idx;
+  if (isValidLocation(location_cmd, board_idx, channel_idx)) {
+    if (strcmp(variable_cmd, "NTC_RT0")==0) {
+      NTC_RT0[board_idx][channel_idx] = new uint16_t(Parameters.NextParameterAsInteger());
+      Serial.print("NTC_RT0 updated to: ");
+      Serial.println(*NTC_RT0[board_idx][channel_idx]);
+      // Serial.print("NTC_RT0 = ");
+      // Serial.println(*NTC_RT0[board_idx][channel_idx]);
+    } else if (strcmp(variable_cmd, "NTC_Beta")==0) {
+      Serial.println(String(board_idx));
+    } else {
+      Serial.println(F("Variable does not exist or is not board-specific."));
+    }
+  }
   else {
     Serial.println(F("Invalid location specified."));
   }
