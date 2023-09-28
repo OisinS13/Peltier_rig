@@ -52,11 +52,11 @@ bool isValidLocation(const char* input, int& board_idx, int& channel_idx) {
     channel_idx = -1;
     return true;  // "all" is a valid input
   } else if (strlen(input) == 1 && isalpha(input[0])) {
-    board_idx = input[0];
+    board_idx = input[0] - 'A';
     channel_idx = -1;
     return true;  // Single letter is valid
   } else if (strlen(input) == 2 && isalpha(input[0]) && isdigit(input[1])) {
-    board_idx = input[0];
+    board_idx = input[0] - 'A';
     channel_idx = input[1] - '0';  // Convert the digit character to an integer
     return true;                   // Letter-number pair is valid
   } else {
@@ -65,19 +65,16 @@ bool isValidLocation(const char* input, int& board_idx, int& channel_idx) {
 }
 
 void Get_Variable(CommandParameter& Parameters) {
-  //Serial.println("hello");
   const char* location_cmd = Parameters.NextParameter();
   const char* variable_cmd = Parameters.NextParameter();
 
   int board_idx, channel_idx;
-  //Serial.println(variable_cmd);
   if (isValidLocation(location_cmd, board_idx, channel_idx)) {
     if (strcmp(variable_cmd, "NTC_RT0")==0) {
-      Serial.println("works");
-      //Serial.println(*NTC_RT0[board_idx][channel_idx]);
+      Serial.print("NTC_RT0 = ");
+      Serial.println(*NTC_RT0[board_idx][channel_idx]);
     } else if (strcmp(variable_cmd, "NTC_Beta")==0) {
-      Serial.println("works");
-      //Serial.println(*NTC_Beta[board_idx][channel_idx]);
+      Serial.println(String(board_idx));
     } else {
       Serial.println(F("Variable does not exist or is not board-specific."));
     }
@@ -86,10 +83,4 @@ void Get_Variable(CommandParameter& Parameters) {
   else {
     Serial.println(F("Invalid location specified."));
   }
-  // if (isValidLocation(location_cmd, board_idx, channel_idx)) {
-  //   Serial.println("YES");
-  //   // Now you can use board_idx and channel_idx as needed
-  // } else {
-  //   Serial.println("NO");
-  // }
 }
