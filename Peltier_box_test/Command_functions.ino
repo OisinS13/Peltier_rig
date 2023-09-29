@@ -19,23 +19,23 @@ void Cmd_Reinitialise(CommandParameter& Parameters) {
 //   }
 // }
 
-bool isValidLocation(const char* input, int& board_idx, int& channel_idx) {
+bool isValidLocation(const char* input, int& board, int& channel) {
   if (strcmp(input, "all") == 0) {
-    board_idx = -1;
-    channel_idx = -1;
+    board = -1;
+    channel = -1;
     return true;  // "all" is a valid input
   } else if (strlen(input) == 1 && isalpha(input[0])) {
-    board_idx = input[0] - 'A';
-    channel_idx = -1;
-    if (board_idx < Num_NTC_boards) {  // assume driver boards = NTC boards
+    board = input[0] - 'A';
+    channel = -1;
+    if (board < Num_NTC_boards) {  // assume driver boards = NTC boards
       return true;
     } else {
       return false;
     }
   } else if (strlen(input) == 2 && isalpha(input[0]) && isdigit(input[1])) {
-    board_idx = input[0] - 'A';
-    channel_idx = input[1] - '0';
-    if (board_idx < Num_NTC_boards && channel_idx < Inputs_per_board) {  // assume driver boards = NTC boards
+    board = input[0] - 'A';
+    channel = input[1] - '0';
+    if (board < Num_NTC_boards && channel < Inputs_per_board) {  // assume driver boards = NTC boards
       return true;
     } else {
       return false;
@@ -47,7 +47,7 @@ bool isValidLocation(const char* input, int& board_idx, int& channel_idx) {
 
 
 
-void interface_Variable(CommandParameter& Parameters, bool set_status) {
+void interfaceVariable(CommandParameter& Parameters, bool set_status) {
   const char* location_cmd = Parameters.NextParameter();
   const char* variable_cmd = Parameters.NextParameter();
 
@@ -207,14 +207,14 @@ void interface_Variable(CommandParameter& Parameters, bool set_status) {
 }
 
 void Get_Variable(CommandParameter& Parameters) {
-  interface_Variable(Parameters, false);
+  interfaceVariable(Parameters, false);
 }
 
 void Set_Variable(CommandParameter& Parameters) {
-  interface_Variable(Parameters, true);
+  interfaceVariable(Parameters, true);
 }
 
-void printChannelStatus(int board, int channel, int command) {
+void printChannelCommand(int board, int channel, int command) {
   // Convert the first integer to the corresponding alphabet letter
   char letter = 'A' + board;
   String command_type;
@@ -232,7 +232,11 @@ void printChannelStatus(int board, int channel, int command) {
 
   // Print the message
   Serial.print(message);
+  // printRunningChannels();
+  // Serial.println();
+}
 
+void printRunningChannels(){
   Serial.print("Currently running channels: ");
   for(int i = 0; i < Num_Driver_boards; i++) { // assume driver boards = PID boards
     uint8_t currentFlag = *Channel_output_flags[i];
@@ -243,10 +247,9 @@ void printChannelStatus(int board, int channel, int command) {
       }
     }
   }
-  Serial.println();
 }
 
-void Channel_Switch(CommandParameter& Parameters, int direction){
+void channelSwitch(CommandParameter& Parameters, int direction){
   const char* location_cmd = Parameters.NextParameter();
   const char* variable_cmd = Parameters.NextParameter();
   int board_idx, channel_idx;
@@ -257,35 +260,23 @@ void Channel_Switch(CommandParameter& Parameters, int direction){
     else if (direction == 1){
       *Channel_output_flags[board_idx] = *Channel_output_flags[board_idx] | (1 << channel_idx);
     }
-    printChannelStatus(board_idx, channel_idx, direction);
-    //Serial.println("Channel stopped.");
+    printChannelCommand(board_idx, channel_idx, direction);
+    printRunningChannels();
+    Serial.println();
   } else {
     Serial.println(F("Invalid location specified."));
   }
 }
 
 void Start_Channel(CommandParameter& Parameters) {
-  Channel_Switch(Parameters, 1);
-  // const char* location_cmd = Parameters.NextParameter();
-  // const char* variable_cmd = Parameters.NextParameter();
-  // int board_idx, channel_idx;
-  // if (isValidLocation(location_cmd, board_idx, channel_idx)) {
-  //   *Channel_output_flags[board_idx] = *Channel_output_flags[board_idx] | (1 << channel_idx);
-  //   printChannelStatus(board_idx, channel_idx, 1);
-  // }
+  channelSwitch(Parameters, 1);
 }
 
 void Stop_Channel(CommandParameter& Parameters) {
-  Channel_Switch(Parameters, -1);
-  // const char* location_cmd = Parameters.NextParameter();
-  // const char* variable_cmd = Parameters.NextParameter();
-  // int board_idx, channel_idx;
-  // if (isValidLocation(location_cmd, board_idx, channel_idx)) {
-  //   *Channel_output_flags[board_idx] = *Channel_output_flags[board_idx] & ~(1 << channel_idx);
-  //   printChannelStatus(board_idx, channel_idx, -1);
-  //   //Serial.println("Channel stopped.");
-  // } else {
-  //   Serial.println(F("Invalid location specified."));
-  // }
+  channelSwitch(Parameters, -1);
+}
 
+void Running_Channels(CommandParameter& Parameters){
+  printRunningChannels();
+  Serial.println();
 }
