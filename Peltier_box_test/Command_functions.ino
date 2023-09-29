@@ -45,6 +45,8 @@ bool isValidLocation(const char* input, int& board_idx, int& channel_idx) {
   }
 }
 
+
+
 void interface_Variable(CommandParameter& Parameters, bool set_status) {
   const char* location_cmd = Parameters.NextParameter();
   const char* variable_cmd = Parameters.NextParameter();
@@ -212,22 +214,78 @@ void Set_Variable(CommandParameter& Parameters) {
   interface_Variable(Parameters, true);
 }
 
-void Start_Channel(CommandParameter& Parameters) {
+void printChannelStatus(int board, int channel, int command) {
+  // Convert the first integer to the corresponding alphabet letter
+  char letter = 'A' + board;
+  String command_type;
+  if (command == -1){
+    // Create the string message
+    command_type = " stopped. ";
+  }
+  else if (command == 1){
+    command_type = " started. ";
+  }
+  else{
+    command_type = ". ";
+  }
+  String message = "Channel " + String(letter) + String(channel) + command_type;
+
+  // Print the message
+  Serial.print(message);
+
+  Serial.print("Currently running channels: ");
+  for(int i = 0; i < Num_Driver_boards; i++) { // assume driver boards = PID boards
+    uint8_t currentFlag = *Channel_output_flags[i];
+    for(int bit = 0; bit < 8; bit++) {
+      if (currentFlag & (1 << bit)) {
+        char channelLetter = 'A' + i;
+        Serial.print(String(channelLetter) + String(bit) + ", ");
+      }
+    }
+  }
+  Serial.println();
+}
+
+void Channel_Switch(CommandParameter& Parameters, int direction){
   const char* location_cmd = Parameters.NextParameter();
   const char* variable_cmd = Parameters.NextParameter();
   int board_idx, channel_idx;
   if (isValidLocation(location_cmd, board_idx, channel_idx)) {
-    *Channel_output_flags[board_idx] = *Channel_output_flags[board_idx] | (1 << channel_idx);
-    Serial.println("Channel started.");
+    if (direction == -1){
+      *Channel_output_flags[board_idx] = *Channel_output_flags[board_idx] & ~(1 << channel_idx);
+    }
+    else if (direction == 1){
+      *Channel_output_flags[board_idx] = *Channel_output_flags[board_idx] | (1 << channel_idx);
+    }
+    printChannelStatus(board_idx, channel_idx, direction);
+    //Serial.println("Channel stopped.");
+  } else {
+    Serial.println(F("Invalid location specified."));
   }
 }
 
+void Start_Channel(CommandParameter& Parameters) {
+  Channel_Switch(Parameters, 1);
+  // const char* location_cmd = Parameters.NextParameter();
+  // const char* variable_cmd = Parameters.NextParameter();
+  // int board_idx, channel_idx;
+  // if (isValidLocation(location_cmd, board_idx, channel_idx)) {
+  //   *Channel_output_flags[board_idx] = *Channel_output_flags[board_idx] | (1 << channel_idx);
+  //   printChannelStatus(board_idx, channel_idx, 1);
+  // }
+}
+
 void Stop_Channel(CommandParameter& Parameters) {
-  const char* location_cmd = Parameters.NextParameter();
-  const char* variable_cmd = Parameters.NextParameter();
-  int board_idx, channel_idx;
-  if (isValidLocation(location_cmd, board_idx, channel_idx)) {
-    *Channel_output_flags[board_idx] = *Channel_output_flags[board_idx] & ~(1 << channel_idx);
-    Serial.println("Channel stopped.");
-  }
+  Channel_Switch(Parameters, -1);
+  // const char* location_cmd = Parameters.NextParameter();
+  // const char* variable_cmd = Parameters.NextParameter();
+  // int board_idx, channel_idx;
+  // if (isValidLocation(location_cmd, board_idx, channel_idx)) {
+  //   *Channel_output_flags[board_idx] = *Channel_output_flags[board_idx] & ~(1 << channel_idx);
+  //   printChannelStatus(board_idx, channel_idx, -1);
+  //   //Serial.println("Channel stopped.");
+  // } else {
+  //   Serial.println(F("Invalid location specified."));
+  // }
+
 }
