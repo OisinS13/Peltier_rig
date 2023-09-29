@@ -19,33 +19,6 @@ void Cmd_Reinitialise(CommandParameter& Parameters) {
 //   }
 // }
 
-// bool isValidLocation(const char* input, int& board_idx, int& channel_idx) {
-//   if (input == "all") {
-//     board_idx = -1;
-//     channel_idx = -1;
-//     return 1; // "all" is a valid input
-//   } else if (strlen(input) == 1 && isalpha(input[0])) {
-//     board_idx = input[0];
-//     channel_idx = -1;
-//     return 1; // Single letter is valid
-//   } else if (strlen(input) == 2 && isalpha(input[0]) && isdigit(input[1])) {
-//     board_idx = input[0];
-//     channel_idx = input[1];
-//     return 1; // Letter-number pair is valid
-//   } else {
-//     return 0; // Invalid input
-//   }
-// }
-
-// void Get_Variable(CommandParameter &Parameters) {
-//   const char* location_cmd = Parameters.NextParameter();
-//   const char* variable_cmd = Parameters.NextParameter();
-
-//   if isValidLocation(location_cmd){
-//     Serial.println("YESS");
-//   }
-// }
-
 bool isValidLocation(const char* input, int& board_idx, int& channel_idx) {
   if (strcmp(input, "all") == 0) {
     board_idx = -1;
@@ -196,6 +169,15 @@ void interface_Variable(CommandParameter& Parameters, bool set_status) {
         }
         Serial.println(*NTC_V_ref[board_idx]);
       }
+      // new variable
+      else if (strcmp(variable_cmd, "Channel_output_flags") == 0) {
+        if (set_status == true) {
+          Serial.println("Unable to start or stop channels with the Set command. Please use Start or Stop.");
+        } else if (set_status == false) {
+          Serial.print("Channel_output_flags = ");
+          Serial.println(*Channel_output_flags[board_idx], BIN);
+        }
+      }
       // unrecognised variable - error
       else {
         Serial.println(F("Variable does not exist or is not board-specific."));
@@ -228,4 +210,24 @@ void Get_Variable(CommandParameter& Parameters) {
 
 void Set_Variable(CommandParameter& Parameters) {
   interface_Variable(Parameters, true);
+}
+
+void Start_Channel(CommandParameter& Parameters) {
+  const char* location_cmd = Parameters.NextParameter();
+  const char* variable_cmd = Parameters.NextParameter();
+  int board_idx, channel_idx;
+  if (isValidLocation(location_cmd, board_idx, channel_idx)) {
+    *Channel_output_flags[board_idx] = *Channel_output_flags[board_idx] | (1 << channel_idx);
+    Serial.println("Channel started.");
+  }
+}
+
+void Stop_Channel(CommandParameter& Parameters) {
+  const char* location_cmd = Parameters.NextParameter();
+  const char* variable_cmd = Parameters.NextParameter();
+  int board_idx, channel_idx;
+  if (isValidLocation(location_cmd, board_idx, channel_idx)) {
+    *Channel_output_flags[board_idx] = *Channel_output_flags[board_idx] & ~(1 << channel_idx);
+    Serial.println("Channel stopped.");
+  }
 }
