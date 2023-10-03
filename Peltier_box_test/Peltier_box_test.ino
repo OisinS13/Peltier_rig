@@ -108,7 +108,11 @@ void setup() {
 
   SerialCommandHandler.AddCommand(F("Re-initialise"), Cmd_Reinitialise);
   SerialCommandHandler.AddCommand(F("Save"), Cmd_Save_settings);
-  // SerialCommandHandler.AddCommand(F("NTC_CS="), Cmd_Set_NTC_CS); //EDITME add function
+  SerialCommandHandler.AddCommand(F("Get"), Get_Variable);
+  SerialCommandHandler.AddCommand(F("Set"), Set_Variable);
+  SerialCommandHandler.AddCommand(F("Start"), Start_Channel);
+  SerialCommandHandler.AddCommand(F("Stop"), Stop_Channel);
+  SerialCommandHandler.AddCommand(F("Show running"), Running_Channels);
 
   Core0_boot_flag = 1;        //Flag to make Core1 wait for Core0
   while (!Core1_boot_flag) {  //Wait for Core1 to finish its setup
