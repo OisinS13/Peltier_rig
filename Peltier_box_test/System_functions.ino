@@ -27,7 +27,7 @@ uint8_t Load_settings_uint8(uint8_t Default_value, char* Name, uint8_t Board_num
       Key_Length += sprintf(&Key_to_find[0], "%s_%c", Name, Board_number + 65);
     } else {
 
-      Key_Length += sprintf(&Key_to_find[0], "%s_%c_%u", Name, Board_number + 65, Channel_number);
+      Key_Length += sprintf(&Key_to_find[0], "%s_%c%u", Name, Board_number + 65, Channel_number);
     }
   }
   //Take_debugging_timestamps();

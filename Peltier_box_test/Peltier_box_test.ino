@@ -78,7 +78,7 @@ char Filename[27];  //Char array to determine filename //EDITME adjust to correc
 char FILE_NAME[30] = "Rig_settings.txt";  //Filename for settings file //EDITME add error for filenames that are too long?
 
 //System variables
-CommandHandler<10, 50> SerialCommandHandler;  //number of commands, then buffer length of command strings
+CommandHandler<10, 50> SerialCommandHandler(Serial,'<','>');  //number of commands, then buffer length of command strings
 
 bool Core0_boot_flag = 0;  //Flag to tell Core1 that Core0 has successfully booted
 bool Core1_boot_flag = 0;  //Flag to tell Core0 that Core1 has successfully booted
@@ -87,6 +87,7 @@ bool SD_boot_flag = 0;     //Flag to indicate SD successfully booted
 bool RTC_flag = 0;         //Flag to indicate RTC successfully booted
 bool file_ready_flag = 0;  //EDITME not currently used?
 bool Verbose_output = 1;   //Flag for debugging messages
+bool Log_to_Serial = 0;    //Flag for sending data to serial port
 
 uint32_t Debugging_timestamps[100];
 uint8_t Debugging_timestamp_position = 0;
@@ -108,7 +109,12 @@ void setup() {
 
   SerialCommandHandler.AddCommand(F("Re-initialise"), Cmd_Reinitialise);
   SerialCommandHandler.AddCommand(F("Save"), Cmd_Save_settings);
-  // SerialCommandHandler.AddCommand(F("NTC_CS="), Cmd_Set_NTC_CS); //EDITME add function
+  SerialCommandHandler.AddCommand(F("Get"), Get_Variable);
+  SerialCommandHandler.AddCommand(F("Set"), Set_Variable);
+  SerialCommandHandler.AddCommand(F("Start"), Start_Channel);
+  SerialCommandHandler.AddCommand(F("Stop"), Stop_Channel);
+  SerialCommandHandler.AddCommand(F("Show running"), Running_Channels);
+  SerialCommandHandler.AddCommand(F("Log_to_Serial"), Log_to_Serial_Set);
 
   Core0_boot_flag = 1;        //Flag to make Core1 wait for Core0
   while (!Core1_boot_flag) {  //Wait for Core1 to finish its setup
@@ -149,8 +155,8 @@ void setup1() {
   //   Serial.println("Loading config file");
   // }
 
-  //EDITME add code to open default file, check if alternative file should be loaded, and load that instead. 
-  //EDITME add code to open file and append "last read" timestamp ending in comma 
+  //EDITME add code to open default file, check if alternative file should be loaded, and load that instead.
+  //EDITME add code to open file and append "last read" timestamp ending in comma
   Num_NTC_boards = Load_settings_uint8(1, "Num_NTC_boards\0");        //Load number of NTC input boards from settings file, or assume just 1 until told otherwise
   Num_Driver_boards = Load_settings_uint8(1, "Num_Driver_boards\0");  //Load number of output driver boards from settings file, or assume just 1 until told otherwise
   PID_Time_Step_mS = Load_settings_uint16(1000, "PID_Time_Step_mS\0");
@@ -172,8 +178,8 @@ void setup1() {
 
   //Initialise output board settings, loading from SD file where available and using defaults otherwise
   for (uint8_t board = 0; board < Num_Driver_boards; board++) {
-    Channel_output_flags[board] = new uint8_t(Load_settings_uint8(0, "Channel_autostart_flags\0", board));  //Assume all ouputs are off unless told otherwise
-    PWM_driver_address[board] = new uint8_t(Load_settings_uint8(board, "PWM_driver_address\0", board));     //Assumes PWM drivers use solder address of 0 upwards, no gaps and in order. Addresses satart at 0x40 and increment upwards according to solder jumpers (offset handled by initiator code)
+    Channel_output_flags[board] = new uint8_t(Load_settings_uint8(0, "Channel_autostart_flags\0", board));  //Assume all ouputs are off unless told otherwise //EDITME doe snot appear to work
+    PWM_driver_address[board] = new uint8_t(Load_settings_uint8(board, "PWM_driver_address\0", board));     //Assumes PWM drivers use solder address of 0 upwards, no gaps and in order. Addresses satart at 0x40 and increment upwards according to solder jumpers (offset handled by initiator code) //EDITME does not appear to work
     PWM_driver[board] = new Adafruit_PWMServoDriver(*PWM_driver_address[board] + 0x40);
     PWM_driver[board]->begin();
     PWM_driver[board]->setPWMFreq(1600);  //Max allowable with hardware
@@ -209,7 +215,7 @@ void loop1() {
   Read_NTC_inputs();
 
 
-//Do PID calcs and push to outputs
+  //Do PID calcs and push to outputs
   for (uint8_t board = 0; board < Num_Driver_boards; board++) {
     for (uint8_t driver = 0; driver < Drivers_per_board; driver++) {
 
@@ -218,17 +224,37 @@ void loop1() {
         if (*Driver_polarity[board][driver]) {
           *PID_Output[board][driver] *= -1;  //Flip output if polarity flag is set
         }
-        if (*PID_Output[board][driver] >= 0) {                                        //If PID output is positive
-          PWM_driver[board]->setPWM((2 * driver), 0, 4096);                           //Set directional output high
+        if (*PID_Output[board][driver] >= 0) {                                         //If PID output is positive
+          PWM_driver[board]->setPWM((2 * driver), 0, 4096);                            //Set directional output high
           PWM_driver[board]->setPWM((2 * driver) + 1, 0, *PID_Output[board][driver]);  //Ouput PID calc to PWM output
-        } else {                                                                      //PID output is negative
-          PWM_driver[board]->setPWM((2 * driver), 4096, 0);                           //Set directional output low
+        } else {                                                                       //PID output is negative
+          PWM_driver[board]->setPWM((2 * driver), 4096, 0);                            //Set directional output low
           PWM_driver[board]->setPWM((2 * driver) + 1, 0, *PID_Output[board][driver]);  //Ouput PID calc to PWM output
         }
       } else if (!PID[board][driver]->isStopped()) {  //If channel output flag is off, but PID is still running
         PID[board][driver]->stop();                   //Stop PID loop
+        *PID_Output[board][driver]=0;
       }
     }
   }
 
+  char Data_to_file[200] = "\n";  //Initialise char array, beginning with a new line character
+  // Data_to_file[1] = ',';
+  int j = 1;  //starts at 1 to account for newline chracter
+
+  for (uint8_t board = 0; board < Num_NTC_boards; board++) {
+    for (uint8_t channel = 0; channel < Inputs_per_board; channel++) {
+      j += sprintf(&Data_to_file[j], "%f,", board + 65, *NTC_T_readings[board][channel]);  //Append a reading, and then a delimeter
+    }
+  }
+  for (uint8_t board = 0; board < Num_Driver_boards; board++) {
+    for (uint8_t driver = 0; driver < Drivers_per_board; driver++) {
+      j += sprintf(&Data_to_file[j], "%f,", board + 65, *PID_Output[board][driver]);  //Append a reading, and then a delimeter
+    }
+  }
+
+
+  if (USB_flag && Log_to_Serial) {
+    Serial.print(Data_to_file);
+  }
 }

@@ -1,4 +1,4 @@
-uint16_t Read_MCP3304(uint8_t Channel, uint8_t Chip_select) {
+-uint16_t Read_MCP3304(uint8_t Channel, uint8_t Chip_select) {
   byte inByte = 0;                      // incoming byte from the SPI
   uint16_t result = 0;                  // result to return
   byte frame = 0b00011000 | (Channel);  //Single ended mode
