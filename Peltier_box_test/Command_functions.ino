@@ -288,3 +288,8 @@ void Log_to_Serial_Set(CommandParameter &Parameters){
       Serial.println(Log_to_Serial);
     }
 }
+
+void Check_available_memory (CommandParameter &Parameters){
+  Serial.print("Memory Heap unallocated = ");
+  Serial.println(rp2040.getFreeHeap());
+}

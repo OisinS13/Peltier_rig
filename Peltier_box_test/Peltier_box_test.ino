@@ -35,6 +35,11 @@ Adafruit_PWMServoDriver *PWM_driver[MAX_Num_Driver_boards];
 uint8_t *PWM_driver_address[MAX_Num_Driver_boards];
 
 //Input variables
+uint8_t Moving_average_window = 100;  //Reduce if hit memory limit
+// one NTC with 100 samples is 13728 bytes
+//one drvier board is 2128 bytes
+//50 sample moving average allows controller to reach the hardware limit of 16 NTC's and 26 drivers
+#define Max_Moving_average_window 100
 #define Max_Num_NTC_boards 16                                                                                  //Required to size the compile time pointers arrays. Limited by hardware (number of available CS pins)
 #define Inputs_per_board 8                                                                                     //Defined by hardware
 uint8_t Num_NTC_boards = 1;                                                                                    //Assume only 1 until told otherwise
@@ -50,9 +55,11 @@ uint16_t *NTC_RT0[Max_Num_NTC_boards][Inputs_per_board];                        
 uint16_t *NTC_Beta[Max_Num_NTC_boards][Inputs_per_board];                                                      //Thermistor resistance at T0
 uint16_t *NTC_R1[Max_Num_NTC_boards][Inputs_per_board];                                                        //Thermistor Beta value
 double *NTC_R_inf[Max_Num_NTC_boards][Inputs_per_board];                                                       //Pre-calculated part of thermistor calculations
-uint16_t *NTC_Raw_Readings[Max_Num_NTC_boards][Inputs_per_board];                                              //Raw ADC readings
-double *NTC_R_readings[Max_Num_NTC_boards][Inputs_per_board];                                                  //ADC readings converted into measured resistance of thermistor
-double *NTC_T_readings[Max_Num_NTC_boards][Inputs_per_board];                                                  //Temperature measurement of thermistors in Celsius
+uint16_t *NTC_Raw_Readings[Max_Num_NTC_boards][Inputs_per_board][Max_Moving_average_window];                   //Raw ADC readings
+float *NTC_Raw_average[Max_Num_NTC_boards][Inputs_per_board];
+uint8_t NTC_Raw_Readings_position = 0;
+double *NTC_R_readings[Max_Num_NTC_boards][Inputs_per_board];  //ADC readings converted into measured resistance of thermistor
+double *NTC_T_readings[Max_Num_NTC_boards][Inputs_per_board];  //Temperature measurement of thermistors in Celsius
 
 
 uint16_t NTC_reading_interval = 1000;    //Time in mS between NTC readings
@@ -78,7 +85,7 @@ char Filename[27];  //Char array to determine filename //EDITME adjust to correc
 char FILE_NAME[30] = "Rig_settings.txt";  //Filename for settings file //EDITME add error for filenames that are too long?
 
 //System variables
-CommandHandler<10, 50> SerialCommandHandler(Serial,'<','>');  //number of commands, then buffer length of command strings
+CommandHandler<10, 50> SerialCommandHandler(Serial, '<', '>');  //number of commands, then buffer length of command strings
 
 bool Core0_boot_flag = 0;  //Flag to tell Core1 that Core0 has successfully booted
 bool Core1_boot_flag = 0;  //Flag to tell Core0 that Core1 has successfully booted
@@ -87,7 +94,9 @@ bool SD_boot_flag = 0;     //Flag to indicate SD successfully booted
 bool RTC_flag = 0;         //Flag to indicate RTC successfully booted
 bool file_ready_flag = 0;  //EDITME not currently used?
 bool Verbose_output = 1;   //Flag for debugging messages
-bool Log_to_Serial = 0;    //Flag for sending data to serial port
+bool Log_to_Serial = 1;    //Flag for sending data to serial port
+uint32_t Previous_data_time = 0;
+uint32_t Logging_interval_ms = 500;
 
 uint32_t Debugging_timestamps[100];
 uint8_t Debugging_timestamp_position = 0;
@@ -115,6 +124,7 @@ void setup() {
   SerialCommandHandler.AddCommand(F("Stop"), Stop_Channel);
   SerialCommandHandler.AddCommand(F("Show running"), Running_Channels);
   SerialCommandHandler.AddCommand(F("Log_to_Serial"), Log_to_Serial_Set);
+  SerialCommandHandler.AddCommand(F("Memory_check"), Check_available_memory);
 
   Core0_boot_flag = 1;        //Flag to make Core1 wait for Core0
   while (!Core1_boot_flag) {  //Wait for Core1 to finish its setup
@@ -164,13 +174,17 @@ void setup1() {
   //Initialise input board settings, loading from SD file where available and using defaults otherwise
   for (uint8_t board = 0; board < Num_NTC_boards; board++) {
     NTC_CS_DIP[board] = new uint8_t(Load_settings_uint8(board, "NTC_CS\0", board));  //Assumes NTC input boards use DIP switch addresses of 0 upwards, no gaps and in order
+    pinMode(NTC_CS_pins[*NTC_CS_DIP[board]], OUTPUT);
     NTC_V_ref[board] = new double(Load_settings_double(NTC_V_ref_default, "NTC_V_ref\0", board));
     for (uint8_t channel = 0; channel < Inputs_per_board; channel++) {
       NTC_RT0[board][channel] = new uint16_t(Load_settings_uint16(NTC_RT0_default, "NTC_RT0\0", board, channel));
       NTC_Beta[board][channel] = new uint16_t(Load_settings_uint16(NTC_Beta_default, "NTC_Beta\0", board, channel));
       NTC_R1[board][channel] = new uint16_t(Load_settings_uint16(NTC_R1_default, "NTC_R1\0", board, channel));
       NTC_R_inf[board][channel] = new double(*NTC_RT0[board][channel] * exp((0.0 - *NTC_Beta[board][channel]) / NTC_T0));
-      NTC_Raw_Readings[board][channel] = new uint16_t(0);
+      for (uint8_t buffer_position = 0; buffer_position < Moving_average_window; buffer_position++) {
+        NTC_Raw_Readings[board][channel][buffer_position] = new uint16_t(0);
+      }
+      NTC_Raw_average[board][channel] = new float(0);
       NTC_R_readings[board][channel] = new double(0);
       NTC_T_readings[board][channel] = new double(0);
     }
@@ -233,28 +247,34 @@ void loop1() {
         }
       } else if (!PID[board][driver]->isStopped()) {  //If channel output flag is off, but PID is still running
         PID[board][driver]->stop();                   //Stop PID loop
-        *PID_Output[board][driver]=0;
+        *PID_Output[board][driver] = 0;
       }
     }
   }
 
-  char Data_to_file[200] = "\n";  //Initialise char array, beginning with a new line character
-  // Data_to_file[1] = ',';
-  int j = 1;  //starts at 1 to account for newline chracter
+  unsigned long currentMillis = millis();
 
-  for (uint8_t board = 0; board < Num_NTC_boards; board++) {
-    for (uint8_t channel = 0; channel < Inputs_per_board; channel++) {
-      j += sprintf(&Data_to_file[j], "%f,", board + 65, *NTC_T_readings[board][channel]);  //Append a reading, and then a delimeter
+  if (currentMillis - Previous_data_time >= Logging_interval_ms) {
+    Previous_data_time = currentMillis;
+
+    char Data_to_file[2000] = "\n";  //Initialise char array, beginning with a new line character
+    // Data_to_file[1] = ',';
+    int j = 1;  //starts at 1 to account for newline chracter
+
+    for (uint8_t board = 0; board < Num_NTC_boards; board++) {
+      for (uint8_t channel = 0; channel < Inputs_per_board; channel++) {
+        j += sprintf(&Data_to_file[j], "%f,", *NTC_T_readings[board][channel]);  //Append a reading, and then a delimeter
+      }
     }
-  }
-  for (uint8_t board = 0; board < Num_Driver_boards; board++) {
-    for (uint8_t driver = 0; driver < Drivers_per_board; driver++) {
-      j += sprintf(&Data_to_file[j], "%f,", board + 65, *PID_Output[board][driver]);  //Append a reading, and then a delimeter
+
+    for (uint8_t board = 0; board < Num_Driver_boards; board++) {
+      for (uint8_t driver = 0; driver < Drivers_per_board; driver++) {
+        j += sprintf(&Data_to_file[j], "%f,", board + 65, *PID_Output[board][driver]);  //Append a reading, and then a delimeter
+      }
     }
-  }
 
-
-  if (USB_flag && Log_to_Serial) {
-    Serial.print(Data_to_file);
+    if (USB_flag && Log_to_Serial) {
+      Serial.print(Data_to_file);
+    }
   }
 }
