@@ -35,9 +35,9 @@ Adafruit_PWMServoDriver *PWM_driver[MAX_Num_Driver_boards];
 uint8_t *PWM_driver_address[MAX_Num_Driver_boards];
 
 //Input variables
-uint8_t Moving_average_window = 100;  //Reduce if hit memory limit
+uint8_t Moving_average_window = 100;  //Reduce if hit memory limit //EDITME limit to max defined below
 // one NTC with 100 samples is 13728 bytes
-//one drvier board is 2128 bytes
+//one driver board is 2128 bytes
 //50 sample moving average allows controller to reach the hardware limit of 16 NTC's and 26 drivers
 #define Max_Moving_average_window 100
 #define Max_Num_NTC_boards 16                                                                                  //Required to size the compile time pointers arrays. Limited by hardware (number of available CS pins)
@@ -62,9 +62,9 @@ double *NTC_R_readings[Max_Num_NTC_boards][Inputs_per_board];  //ADC readings co
 double *NTC_T_readings[Max_Num_NTC_boards][Inputs_per_board];  //Temperature measurement of thermistors in Celsius
 
 
-uint16_t NTC_reading_interval = 1000;    //Time in mS between NTC readings
-uint32_t Previous_Read_Time_Millis = 0;  //Stored millis() values for triggering NTC readings
-uint32_t Current_Time_Millis = 0;
+// uint16_t NTC_reading_interval = 1000;    //Time in mS between NTC readings
+// uint32_t Previous_Read_Time_Millis = 0;  //Stored millis() values for triggering NTC readings
+// uint32_t Current_Time_Millis = 0;
 
 //SD card variables
 #define SD_SCK_PIN 2  //This SPI bus is used for SD card and NTC ADC's
@@ -76,6 +76,7 @@ uint32_t Current_Time_Millis = 0;
 SdFat32 SD;
 RTC_PCF8523 rtc;
 File32 logfile;
+// File logfile
 
 char Filename[27];  //Char array to determine filename //EDITME adjust to correct length
 
@@ -94,12 +95,13 @@ bool SD_boot_flag = 0;     //Flag to indicate SD successfully booted
 bool RTC_flag = 0;         //Flag to indicate RTC successfully booted
 bool file_ready_flag = 0;  //EDITME not currently used?
 bool Verbose_output = 1;   //Flag for debugging messages
-bool Log_to_Serial = 1;    //Flag for sending data to serial port
+bool Log_to_Serial = 0;    //Flag for sending data to serial port
 uint32_t Previous_data_time = 0;
 uint32_t Logging_interval_ms = 500;
+bool SPI_flag = 1;
 
-uint32_t Debugging_timestamps[100];
-uint8_t Debugging_timestamp_position = 0;
+// uint32_t Debugging_timestamps[100];
+// uint8_t Debugging_timestamp_position = 0;
 
 //Functions with optional arguements need to be given a prototype before setup() because IDE is odd
 uint8_t Load_settings_uint8(uint8_t Default_value, char *Name, uint8_t Board_number = 255, uint8_t Channel_number = 255);
@@ -137,6 +139,9 @@ void setup1() {
   while (!Core0_boot_flag) {  //Wait for Core0 to finish its setup
     delay(10);
   }
+
+  Serial.print("Memory Heap unallocated = ");
+  Serial.println(rp2040.getFreeHeap());
 
   Initialise_SD(SD_SCK_PIN, SD_COPI_PIN, SD_CIPO_PIN, SD_CS_PIN);
 
@@ -192,17 +197,15 @@ void setup1() {
 
   //Initialise output board settings, loading from SD file where available and using defaults otherwise
   for (uint8_t board = 0; board < Num_Driver_boards; board++) {
-    Channel_output_flags[board] = new uint8_t(Load_settings_uint8(0, "Channel_autostart_flags\0", board));  //Assume all ouputs are off unless told otherwise //EDITME doe snot appear to work
-    PWM_driver_address[board] = new uint8_t(Load_settings_uint8(board, "PWM_driver_address\0", board));     //Assumes PWM drivers use solder address of 0 upwards, no gaps and in order. Addresses satart at 0x40 and increment upwards according to solder jumpers (offset handled by initiator code) //EDITME does not appear to work
+    Channel_output_flags[board] = new uint8_t(Load_settings_uint8(0b11111111, "Channel_autostart_flags\0", board));  //Assume all ouputs are off unless told otherwise //EDITME doe snot appear to work
+    PWM_driver_address[board] = new uint8_t(Load_settings_uint8(board, "PWM_driver_address\0", board));              //Assumes PWM drivers use solder address of 0 upwards, no gaps and in order. Addresses satart at 0x40 and increment upwards according to solder jumpers (offset handled by initiator code) //EDITME does not appear to work
     PWM_driver[board] = new Adafruit_PWMServoDriver(*PWM_driver_address[board] + 0x40);
     PWM_driver[board]->begin();
     PWM_driver[board]->setPWMFreq(1600);  //Max allowable with hardware
 
-    Adafruit_PWMServoDriver *PWM_driver[MAX_Num_Driver_boards];
-    uint8_t *PWM_driver_address[MAX_Num_Driver_boards];
     for (uint8_t driver = 0; driver < Drivers_per_board; driver++) {
-      PID_Input_map[MAX_Num_Driver_boards][Drivers_per_board][0] = new char;
-      PID_Input_map[MAX_Num_Driver_boards][Drivers_per_board][1] = new char;
+      PID_Input_map[board][driver][0] = new char();
+      PID_Input_map[board][driver][1] = new char();
       PID_Input[board][driver] = Load_settings_string_pointer(NTC_T_readings[board][driver], "PID_Input\0", board, driver);  //Assumes outputs are controlled by corresponding inputs. A1 to A1, B3 to B3 etc
       PID_Setpoint[board][driver] = new double(Load_settings_double(NTC_V_ref_default, "PID_Setpoint\0", board, driver));
       PID_Output[board][driver] = new double();
@@ -212,6 +215,7 @@ void setup1() {
       PID_KI[board][driver] = new double(Load_settings_double(0, "PID_KI\0", board, driver));
       PID_KD[board][driver] = new double(Load_settings_double(0, "PID_KD\0", board, driver));
       PID[board][driver] = new AutoPID(PID_Input[board][driver], PID_Setpoint[board][driver], PID_Output[board][driver], *PID_Output_Min[board][driver], *PID_Output_Max[board][driver], *PID_KP[board][driver], *PID_KI[board][driver], *PID_KD[board][driver]);  //Initialise PID objects with appropriate arguments
+      PID[board][driver]->setBangBang(100.0);
     }
   }
 
@@ -223,10 +227,15 @@ void loop() {
   while (!Core1_boot_flag) {}  //Check if Core1 has booted. Required in case of reboot over UART
 
   SerialCommandHandler.Process();
+  if (!USB_flag) {
+    USB_flag = USB_setup(115200, 1);  //Iniitalise the USB, and set flag if present
+  }
 }
 
 void loop1() {
-  Read_NTC_inputs();
+  if (SPI_flag) {
+    Read_NTC_inputs();
+  }
 
 
   //Do PID calcs and push to outputs
@@ -276,5 +285,7 @@ void loop1() {
     if (USB_flag && Log_to_Serial) {
       Serial.print(Data_to_file);
     }
+
+    //EDITME add SD logging code
   }
 }

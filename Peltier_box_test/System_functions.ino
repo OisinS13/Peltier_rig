@@ -175,18 +175,18 @@ double* Load_settings_string_pointer(double* Default_value, char Name[KEY_MAX_LE
   }
 }
 
-void Take_debugging_timestamps() {
-  Debugging_timestamps[Debugging_timestamp_position] = millis() - Debugging_timestamps[0];
-  Debugging_timestamp_position += 1;
-}
+// void Take_debugging_timestamps() {
+//   Debugging_timestamps[Debugging_timestamp_position] = millis() - Debugging_timestamps[0];
+//   Debugging_timestamp_position += 1;
+// }
 
-void Print_reset_debugging_timestamps() {
-  Serial.print(Debugging_timestamp_position);
-  Serial.println(",");
-  for (uint8_t i = 0; i < Debugging_timestamp_position + 1; i++) {
-    Serial.print(Debugging_timestamps[i]);
-    Serial.println(",");
-  }
-  memset(&Debugging_timestamps[0], 0, 4 * (Debugging_timestamp_position + 1));
-  Debugging_timestamp_position = 0;
-}
+// void Print_reset_debugging_timestamps() {
+//   Serial.print(Debugging_timestamp_position);
+//   Serial.println(",");
+//   for (uint8_t i = 0; i < Debugging_timestamp_position + 1; i++) {
+//     Serial.print(Debugging_timestamps[i]);
+//     Serial.println(",");
+//   }
+//   memset(&Debugging_timestamps[0], 0, 4 * (Debugging_timestamp_position + 1));
+//   Debugging_timestamp_position = 0;
+// }

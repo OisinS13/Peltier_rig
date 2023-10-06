@@ -3,15 +3,63 @@ void Cmd_Unknown() {
 }
 
 void Cmd_Reinitialise(CommandParameter& Parameters) {
+  rp2040.idleOtherCore();
+  // Check_available_memory(Parameters);
+
+  //Free memory used on the heap
+  for (uint8_t board = 0; board < Num_NTC_boards; board++) {
+    delete NTC_CS_DIP[board];
+    delete NTC_V_ref[board];
+    for (uint8_t channel = 0; channel < Inputs_per_board; channel++) {
+      delete NTC_RT0[board][channel];
+      delete NTC_Beta[board][channel];
+      delete NTC_R1[board][channel];
+      delete NTC_R_inf[board][channel];
+      for (uint8_t buffer_position = 0; buffer_position < Moving_average_window; buffer_position++) {
+        delete NTC_Raw_Readings[board][channel][buffer_position];
+      }
+      delete NTC_Raw_average[board][channel];
+      delete NTC_R_readings[board][channel];
+      delete NTC_T_readings[board][channel];
+    }
+  }
+  // Serial.println("NTC parameters deleted");
+
+  for (uint8_t board = 0; board < Num_Driver_boards; board++) {
+    delete Channel_output_flags[board];
+    delete PWM_driver_address[board];
+    delete PWM_driver[board];
+
+    for (uint8_t driver = 0; driver < Drivers_per_board; driver++) {
+      delete PID_Input_map[board][driver][0];
+      delete PID_Input_map[board][driver][1];
+      delete PID_Setpoint[board][driver];
+      delete PID_Output[board][driver];
+      delete PID_Output_Min[board][driver];
+      delete PID_Output_Max[board][driver];
+      delete PID_KP[board][driver];
+      delete PID_KI[board][driver];
+      delete PID_KD[board][driver];
+      delete PID[board][driver];
+    }
+  }
+
+  // Serial.println("Driver parameters deleted");
+
+  // Check_available_memory(Parameters);
+
+  rp2040.resumeOtherCore();
   rp2040.restartCore1();
+  // rp2040.reboot();
+  return;
 }
 
-void Cmd_Save_settings(CommandParameter &Parameters) {
- const char *Filename_from_CMD=Parameters.NextParameter();
-    if (Verbose_output) {
-      Serial.print("Filename: ");
-      Serial.println(Filename_from_CMD);
-    }
+void Cmd_Save_settings(CommandParameter& Parameters) {
+  const char* Filename_from_CMD = Parameters.NextParameter();
+  if (Verbose_output) {
+    Serial.print("Filename: ");
+    Serial.println(Filename_from_CMD);
+  }
   if (Save_settings_to_file(Filename_from_CMD)) {
     if (Verbose_output) {
       Serial.println("Settings saved");
@@ -218,14 +266,12 @@ void printChannelCommand(int board, int channel, int command) {
   // Convert the first integer to the corresponding alphabet letter
   char letter = 'A' + board;
   String command_type;
-  if (command == -1){
+  if (command == -1) {
     // Create the string message
     command_type = " stopped. ";
-  }
-  else if (command == 1){
+  } else if (command == 1) {
     command_type = " started. ";
-  }
-  else{
+  } else {
     command_type = ". ";
   }
   String message = "Channel " + String(letter) + String(channel) + command_type;
@@ -236,11 +282,11 @@ void printChannelCommand(int board, int channel, int command) {
   // Serial.println();
 }
 
-void printRunningChannels(){
+void printRunningChannels() {
   Serial.print("Currently running channels: ");
-  for(int i = 0; i < Num_Driver_boards; i++) { // assume driver boards = PID boards
+  for (int i = 0; i < Num_Driver_boards; i++) {  // assume driver boards = PID boards
     uint8_t currentFlag = *Channel_output_flags[i];
-    for(int bit = 0; bit < 8; bit++) {
+    for (int bit = 0; bit < 8; bit++) {
       if (currentFlag & (1 << bit)) {
         char channelLetter = 'A' + i;
         Serial.print(String(channelLetter) + String(bit) + ", ");
@@ -249,15 +295,14 @@ void printRunningChannels(){
   }
 }
 
-void channelSwitch(CommandParameter& Parameters, int direction){
+void channelSwitch(CommandParameter& Parameters, int direction) {
   const char* location_cmd = Parameters.NextParameter();
   const char* variable_cmd = Parameters.NextParameter();
   int board_idx, channel_idx;
   if (isValidLocation(location_cmd, board_idx, channel_idx)) {
-    if (direction == -1){
+    if (direction == -1) {
       *Channel_output_flags[board_idx] = *Channel_output_flags[board_idx] & ~(1 << channel_idx);
-    }
-    else if (direction == 1){
+    } else if (direction == 1) {
       *Channel_output_flags[board_idx] = *Channel_output_flags[board_idx] | (1 << channel_idx);
     }
     printChannelCommand(board_idx, channel_idx, direction);
@@ -276,20 +321,20 @@ void Stop_Channel(CommandParameter& Parameters) {
   channelSwitch(Parameters, -1);
 }
 
-void Running_Channels(CommandParameter& Parameters){
+void Running_Channels(CommandParameter& Parameters) {
   printRunningChannels();
   Serial.println();
 }
 
-void Log_to_Serial_Set(CommandParameter &Parameters){
- Log_to_Serial=Parameters.NextParameter();
-    if (Verbose_output) {
-      Serial.print("Logging to Serial: ");
-      Serial.println(Log_to_Serial);
-    }
+void Log_to_Serial_Set(CommandParameter& Parameters) {
+  Log_to_Serial = Parameters.NextParameterAsInteger();
+  if (Verbose_output) {
+    Serial.print("Logging to Serial: ");
+    Serial.println(Log_to_Serial);
+  }
 }
 
-void Check_available_memory (CommandParameter &Parameters){
+void Check_available_memory(CommandParameter& Parameters) {
   Serial.print("Memory Heap unallocated = ");
   Serial.println(rp2040.getFreeHeap());
 }

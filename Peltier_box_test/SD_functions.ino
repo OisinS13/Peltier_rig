@@ -11,8 +11,16 @@ void Initialise_SD(uint8_t SCK, uint8_t COPI, uint8_t CIPO, uint8_t CS) {
     if (USB_flag) {
       Serial.println("initialization failed!");
     }
-    //EDITME write error throwing code
-  } else {
+
+    // if (!SD.begin(CS)) {
+    //   Serial.println("initialization failed!");
+    return;
+  }
+  // SPI.beginTransaction(SPISettings(1000000, MSBFIRST, SPI_MODE0));  //Set the SPI settings so the ADC's work
+  // SPI.endTransaction();
+  //EDITME write error throwing code
+  // }
+  else {
     SD_boot_flag = 1;
     if (USB_flag) {
       Serial.println("initialization done.");
@@ -54,14 +62,26 @@ bool Create_logfile(DateTime Log_time, char *Filename_array) {
     Serial.println(Filename_array);
   }
 
-  if (!logfile.open(Filename_array, O_RDWR | O_CREAT | O_TRUNC)) {
-    if (USB_flag) {
-      Serial.println("File open failed");
-    }
-    return 0;
-  } else {
-    return 1;
-  }
+  // if (!logfile.open(Filename_array, O_RDWR | O_CREAT | O_TRUNC)) {
+  //   if (USB_flag) {
+  //     Serial.println("File open failed");
+  //   }
+  //   return 0;
+  // } else {
+  //   return 1;
+  // }
+
+  // logfile = SD.open(Filename_array, FILE_WRITE);
+  // if (!myFile) {
+  //   if (USB_flag) {
+  //     Serial.println("File open failed");
+  //   }
+  //   return 0;
+  // } else {
+  //   return 1;
+  // }
+  // myFile.close();
+  return 1;
 }
 
 bool SD_available(char *key) {
@@ -198,15 +218,32 @@ String HELPER_ascii2String(char *ascii, int length) {
 
 bool Save_settings_to_file(const char *Filename) {
 
-  File32 Settings_save_file;
+rp2040.idleOtherCore();
+  Serial.println("File open begin");
+  File32 Settings_save_file;//= SD.open("test.txt", FILE_WRITE);
+
+  // if (!Settings_save_file) {
+  //   Serial.print(F("SD Card: error on opening file "));
+  //   Serial.println(Filename);
+  //   return 0;
+  // }
+
+
   if (!Settings_save_file.open(Filename, O_RDWR | O_CREAT | O_TRUNC)) {
     if (Verbose_output) {
       Serial.println("Settings save file open failed");
     }
+    rp2040.resumeOtherCore();
     return 0;
   }
 
-  char Data_to_file[200] = ",";  //Initialise char array, beginning with a new line character
+  Serial.println("File opened");
+
+  // Settings_save_file.truncate(0);
+
+  // Serial.println("File truncated");
+
+  char Data_to_file[200] = ",";  //Initialise char array, beginning with a comma
   // Data_to_file[1] = ',';
   int j = 1;  //starts at 1 to account for newline chracter
 
@@ -251,7 +288,7 @@ bool Save_settings_to_file(const char *Filename) {
     j = 2;
 
     j += sprintf(&Data_to_file[j], "Channel_autostart_flags_%c=%u,", board + 65, *Channel_output_flags[board]);  //Append a reading, and then a delimeter
-    j += sprintf(&Data_to_file[j], "PWM_driver_address_%c=%u,", board + 65, *PWM_driver_address[board]);  //Append a reading, and then a delimeter
+    j += sprintf(&Data_to_file[j], "PWM_driver_address_%c=%u,", board + 65, *PWM_driver_address[board]);         //Append a reading, and then a delimeter
 
     Settings_save_file.write(&Data_to_file, j);  //Write the whole data string to the file
     Settings_save_file.sync();                   //Save data to disc
@@ -278,6 +315,6 @@ bool Save_settings_to_file(const char *Filename) {
   }
 
   Settings_save_file.close();
-
+rp2040.resumeOtherCore();
   return 1;
 }
