@@ -1,0 +1,98 @@
+
+(rules PCB CCC_rig_backplane
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout off)
+    (autoroute on)
+    (postroute on)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 836)
+    (layer_rule F.Cu
+      (active on)
+      (preferred_direction horizontal)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 6.3)
+    )
+    (layer_rule B.Cu
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 1.2)
+    )
+  )
+  (rule
+    (width 250.0)
+    (clearance 200.2)
+    (clearance 125.0 (type smd_to_turn_gap))
+    (clearance 50.0 (type smd))
+    (clearance 200.2 (type "kicad_default"))
+    (clearance 200.2 (type "MCU_PWR"))
+  )
+  (padstack "Via[0-1]_800:400_um"
+    (shape
+      (circle F.Cu 800.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 800.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_800:400_um" "Via[0-1]_800:400_um" default
+  )
+  (via 
+    "Via[0-1]_800:400_um-kicad_default" "Via[0-1]_800:400_um" "kicad_default"
+  )
+  (via 
+    "Via[0-1]_800:400_um-MCU_PWR" "Via[0-1]_800:400_um" "MCU_PWR"
+  )
+  (via_rule
+    default "Via[0-1]_800:400_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_800:400_um-kicad_default"
+  )
+  (via_rule
+    "MCU_PWR" "Via[0-1]_800:400_um-MCU_PWR"
+  )
+  (class default
+    VCC GNDPWR "PSU_0_PSON#" "PWM_OE" "I2C_SCL" "I2C_SDA" "PSU_0_ADDR" "unconnected-(J10-Pad28)"
+    "unconnected-(J10-Pad29)" "PSU_SDA" "PSU_SCL" "PSU_0_IMONITOR" "PSU_0_PSOK" "PSU_0_PRESENT#" "PSU_0_PSINTERRUPT" "PSU_1_ADDR"
+    "unconnected-(J11-Pad28)" "unconnected-(J11-Pad29)" "PSU_1_IMONITOR" "PSU_1_PSOK" "PSU_1_PRESENT#" "PSU_1_PSINTERRUPT" "Net-(J13-Pad1)" "Net-(J14-Pad1)"
+    "PSU_2_ADDR" "unconnected-(J15-Pad28)" "unconnected-(J15-Pad29)" "PSU_2_IMONITOR" "PSU_2_PSOK" "PSU_2_PRESENT#" "PSU_2_PSINTERRUPT"
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 250.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "kicad_default"
+    (clearance_class "kicad_default")
+    (via_rule "kicad_default")
+    (rule
+      (width 250.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "MCU_PWR"
+    "+12V_GND{slash}RTN" +3.3V "12V_SB"
+    (clearance_class "MCU_PWR")
+    (via_rule "MCU_PWR")
+    (rule
+      (width 500.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+)
