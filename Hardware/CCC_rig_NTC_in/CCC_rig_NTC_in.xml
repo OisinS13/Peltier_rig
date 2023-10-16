@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>E:\Consultancy\VW\CCC_rig_NTC_in\CCC_rig_NTC_in.kicad_sch</source>
+    <date>05/09/2023 09:46:58</date>
+    <tool>Eeschema (6.0.7)</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>CCC_rig_NTC_in.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C11">
+      <value>10 nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ecc18409-6568-4ff8-927e-d000ea10e9db</tstamps>
+    </comp>
+    <comp ref="C12">
+      <value>10 nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>35271a02-9e8a-4ebf-a522-17b23f63e904</tstamps>
+    </comp>
+    <comp ref="C13">
+      <value>10 nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>652ea06a-5400-406e-8875-4df348e2f0b8</tstamps>
+    </comp>
+    <comp ref="C14">
+      <value>10 nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a82e7aec-f4f1-4dea-8b58-1addd6fd4426</tstamps>
+    </comp>
+    <comp ref="C15">
+      <value>10 nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>110793e4-a36f-4a6a-aae5-8dc6cc4d1003</tstamps>
+    </comp>
+    <comp ref="C16">
+      <value>10 nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9b150783-af23-42d5-a397-bccc1edd6eff</tstamps>
+    </comp>
+    <comp ref="C17">
+      <value>10 nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>4637aace-29f1-4cc2-a106-a5029e98e8dd</tstamps>
+    </comp>
+    <comp ref="C18">
+      <value>10 nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3a62edbe-5703-4890-a426-31bd5a64f7d8</tstamps>
+    </comp>
+    <comp ref="C19">
+      <value>10 nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7de7030a-e0d0-4f8e-9611-a92b7792c2fe</tstamps>
+    </comp>
+    <comp ref="C20">
+      <value>10 nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8ef12de8-75b4-4b27-a305-6393be5944b8</tstamps>
+    </comp>
+    <comp ref="C21">
+      <value>1 uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a357c2a4-e188-40e5-bca5-5e4379f81dd4</tstamps>
+    </comp>
+    <comp ref="IC2">
+      <value>REF3433IDBVR</value>
+      <footprint>SamacSys_Parts:SOT95P280X145-6N</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/ref3433.pdf</datasheet>
+      <fields>
+        <field name="Description">3.3V Low-Drift Low-Power Small-Footprint Series Voltage Reference</field>
+        <field name="Height">1.45</field>
+        <field name="Manufacturer_Name">Texas Instruments</field>
+        <field name="Manufacturer_Part_Number">REF3433IDBVR</field>
+        <field name="Mouser Part Number">595-REF3433IDBVR</field>
+        <field name="Mouser Price/Stock">https://www.mouser.co.uk/ProductDetail/Texas-Instruments/REF3433IDBVR?qs=W0yvOO0ixfGBJPqcMgjPbw%3D%3D</field>
+      </fields>
+      <libsource lib="SamacSys_Parts" part="REF3433IDBVR" description=""/>
+      <property name="Description" value="3.3V Low-Drift Low-Power Small-Footprint Series Voltage Reference"/>
+      <property name="Height" value="1.45"/>
+      <property name="Mouser Part Number" value="595-REF3433IDBVR"/>
+      <property name="Mouser Price/Stock" value="https://www.mouser.co.uk/ProductDetail/Texas-Instruments/REF3433IDBVR?qs=W0yvOO0ixfGBJPqcMgjPbw%3D%3D"/>
+      <property name="Manufacturer_Name" value="Texas Instruments"/>
+      <property name="Manufacturer_Part_Number" value="REF3433IDBVR"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f3a96717-d6a3-492a-ab1a-8a392baaf861</tstamps>
+    </comp>
+    <comp ref="IC3">
+      <value>MCP3304-CI_P</value>
+      <footprint>SamacSys_Parts:DIP781W56P254L1918H533Q16N</footprint>
+      <fields>
+        <field name="Description">Microchip MCP3304-CI/P, 13 bit Serial ADC, Differential Input, 16-Pin PDIP</field>
+        <field name="Height">5.334</field>
+        <field name="Manufacturer_Name">Microchip</field>
+        <field name="Manufacturer_Part_Number">MCP3304-CI/P</field>
+        <field name="Mouser Part Number">579-MCP3304-CI/P</field>
+        <field name="Mouser Price/Stock">https://www.mouser.co.uk/ProductDetail/Microchip-Technology/MCP3304-CI-P?qs=2HbNQnvoB68T7LZcGwqiOg%3D%3D</field>
+      </fields>
+      <libsource lib="SamacSys_Parts" part="MCP3304-CI_P" description=""/>
+      <property name="Description" value="Microchip MCP3304-CI/P, 13 bit Serial ADC, Differential Input, 16-Pin PDIP"/>
+      <property name="Height" value="5.334"/>
+      <property name="Mouser Part Number" value="579-MCP3304-CI/P"/>
+      <property name="Mouser Price/Stock" value="https://www.mouser.co.uk/ProductDetail/Microchip-Technology/MCP3304-CI-P?qs=2HbNQnvoB68T7LZcGwqiOg%3D%3D"/>
+      <property name="Manufacturer_Name" value="Microchip"/>
+      <property name="Manufacturer_Part_Number" value="MCP3304-CI/P"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>22cf53e0-a8e7-4908-b5ce-54e33d06a292</tstamps>
+    </comp>
+    <comp ref="J9">
+      <value>NTC_Conn</value>
+      <footprint>SamacSys_Parts:43045-16YY_212223</footprint>
+      <libsource lib="Connector_Generic" part="Conn_02x08_Top_Bottom" description="Generic connector, double row, 02x08, top/bottom pin numbering scheme (row 1: 1...pins_per_row, row2: pins_per_row+1 ... num_pins), script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2f78ac4c-8219-475e-96f2-9256bff4a6e8</tstamps>
+    </comp>
+    <comp ref="J10">
+      <value>NTC_ADC_Conn</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x06" description="Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6c6b7959-ac0e-4383-b05a-e7cff543d89c</tstamps>
+    </comp>
+    <comp ref="J11">
+      <value>NTC_ADC_CS_Conn</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_2x08_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x16" description="Generic connector, single row, 01x16, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2bbf798d-653f-474e-92fa-4434929a7854</tstamps>
+    </comp>
+    <comp ref="R12">
+      <value>6.8k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e5a7785e-a2a6-4c6d-a476-b5644f0a648a</tstamps>
+    </comp>
+    <comp ref="R13">
+      <value>6.8k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0ad225b8-b153-4b4c-99ba-3393b8308122</tstamps>
+    </comp>
+    <comp ref="R14">
+      <value>6.8k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>bc23af4d-4553-45a9-bafb-13859116c790</tstamps>
+    </comp>
+    <comp ref="R15">
+      <value>6.8k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a681c507-db61-493a-b939-4e12e51c6178</tstamps>
+    </comp>
+    <comp ref="R16">
+      <value>6.8k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>91f1e746-df09-4487-8650-0dc6d6385211</tstamps>
+    </comp>
+    <comp ref="R17">
+      <value>6.8k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>61053d1a-c94a-4fc3-9df8-8c99a3d22de4</tstamps>
+    </comp>
+    <comp ref="R18">
+      <value>6.8k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e3866a7f-d16e-4d50-b62f-cdfb7eda7c8f</tstamps>
+    </comp>
+    <comp ref="R19">
+      <value>6.8k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7cc52ff8-e33d-4bb3-b7a4-7b3cca338f99</tstamps>
+    </comp>
+    <comp ref="S1">
+      <value>DS01C-254-S-08BE</value>
+      <footprint>SamacSys_Parts:DS01C254S08BE</footprint>
+      <fields>
+        <field name="Description">DIP Switches / SIP Switches DIP Switch, SPST, 2.54 pitch, raised actuator, covex bottom, Short pin, 8 position, Blue</field>
+        <field name="Height">7</field>
+        <field name="Manufacturer_Name">CUI Devices</field>
+        <field name="Manufacturer_Part_Number">DS01C-254-S-08BE</field>
+        <field name="Mouser Part Number">490-DS01C-254-S-08BE</field>
+        <field name="Mouser Price/Stock">https://www.mouser.co.uk/ProductDetail/CUI-Devices/DS01C-254-S-08BE?qs=wnTfsH77Xs7cSHDxhLRJbA%3D%3D</field>
+      </fields>
+      <libsource lib="SamacSys_Parts" part="DS01C-254-S-08BE" description=""/>
+      <property name="Description" value="DIP Switches / SIP Switches DIP Switch, SPST, 2.54 pitch, raised actuator, covex bottom, Short pin, 8 position, Blue"/>
+      <property name="Height" value="7"/>
+      <property name="Mouser Part Number" value="490-DS01C-254-S-08BE"/>
+      <property name="Mouser Price/Stock" value="https://www.mouser.co.uk/ProductDetail/CUI-Devices/DS01C-254-S-08BE?qs=wnTfsH77Xs7cSHDxhLRJbA%3D%3D"/>
+      <property name="Manufacturer_Name" value="CUI Devices"/>
+      <property name="Manufacturer_Part_Number" value="DS01C-254-S-08BE"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>57f701f4-a968-4ba9-b5ca-fbdd73f16779</tstamps>
+    </comp>
+    <comp ref="S2">
+      <value>DS01C-254-S-08BE</value>
+      <footprint>SamacSys_Parts:DS01C254S08BE</footprint>
+      <fields>
+        <field name="Description">DIP Switches / SIP Switches DIP Switch, SPST, 2.54 pitch, raised actuator, covex bottom, Short pin, 8 position, Blue</field>
+        <field name="Height">7</field>
+        <field name="Manufacturer_Name">CUI Devices</field>
+        <field name="Manufacturer_Part_Number">DS01C-254-S-08BE</field>
+        <field name="Mouser Part Number">490-DS01C-254-S-08BE</field>
+        <field name="Mouser Price/Stock">https://www.mouser.co.uk/ProductDetail/CUI-Devices/DS01C-254-S-08BE?qs=wnTfsH77Xs7cSHDxhLRJbA%3D%3D</field>
+      </fields>
+      <libsource lib="SamacSys_Parts" part="DS01C-254-S-08BE" description=""/>
+      <property name="Description" value="DIP Switches / SIP Switches DIP Switch, SPST, 2.54 pitch, raised actuator, covex bottom, Short pin, 8 position, Blue"/>
+      <property name="Height" value="7"/>
+      <property name="Mouser Part Number" value="490-DS01C-254-S-08BE"/>
+      <property name="Mouser Price/Stock" value="https://www.mouser.co.uk/ProductDetail/CUI-Devices/DS01C-254-S-08BE?qs=wnTfsH77Xs7cSHDxhLRJbA%3D%3D"/>
+      <property name="Manufacturer_Name" value="CUI Devices"/>
+      <property name="Manufacturer_Part_Number" value="DS01C-254-S-08BE"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="CCC_rig_NTC_in.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8c9d4ba1-7fe2-43b4-9aa6-f74e1cb8e058</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Connector_Generic" part="Conn_01x06">
+      <description>Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x06</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x16">
+      <description>Generic connector, single row, 01x16, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x16</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+        <pin num="9" name="Pin_9" type="passive"/>
+        <pin num="10" name="Pin_10" type="passive"/>
+        <pin num="11" name="Pin_11" type="passive"/>
+        <pin num="12" name="Pin_12" type="passive"/>
+        <pin num="13" name="Pin_13" type="passive"/>
+        <pin num="14" name="Pin_14" type="passive"/>
+        <pin num="15" name="Pin_15" type="passive"/>
+        <pin num="16" name="Pin_16" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_02x08_Top_Bottom">
+      <description>Generic connector, double row, 02x08, top/bottom pin numbering scheme (row 1: 1...pins_per_row, row2: pins_per_row+1 ... num_pins), script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_2x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_02x08_Top_Bottom</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+        <pin num="9" name="Pin_9" type="passive"/>
+        <pin num="10" name="Pin_10" type="passive"/>
+        <pin num="11" name="Pin_11" type="passive"/>
+        <pin num="12" name="Pin_12" type="passive"/>
+        <pin num="13" name="Pin_13" type="passive"/>
+        <pin num="14" name="Pin_14" type="passive"/>
+        <pin num="15" name="Pin_15" type="passive"/>
+        <pin num="16" name="Pin_16" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="SamacSys_Parts" part="DS01C-254-S-08BE">
+      <fields>
+        <field name="Reference">S</field>
+        <field name="Value">DS01C-254-S-08BE</field>
+        <field name="Footprint">DS01C254S08BE</field>
+        <field name="Description">DIP Switches / SIP Switches DIP Switch, SPST, 2.54 pitch, raised actuator, covex bottom, Short pin, 8 position, Blue</field>
+        <field name="Height">7</field>
+        <field name="Mouser Part Number">490-DS01C-254-S-08BE</field>
+        <field name="Mouser Price/Stock">https://www.mouser.co.uk/ProductDetail/CUI-Devices/DS01C-254-S-08BE?qs=wnTfsH77Xs7cSHDxhLRJbA%3D%3D</field>
+        <field name="Manufacturer_Name">CUI Devices</field>
+        <field name="Manufacturer_Part_Number">DS01C-254-S-08BE</field>
+      </fields>
+      <pins>
+        <pin num="1" name="COM_1" type="passive"/>
+        <pin num="2" name="NO_1" type="passive"/>
+        <pin num="3" name="COM_2" type="passive"/>
+        <pin num="4" name="NO_2" type="passive"/>
+        <pin num="5" name="COM_3" type="passive"/>
+        <pin num="6" name="NO_3" type="passive"/>
+        <pin num="7" name="COM_4" type="passive"/>
+        <pin num="8" name="NO_4" type="passive"/>
+        <pin num="9" name="COM_5" type="passive"/>
+        <pin num="10" name="NO_5" type="passive"/>
+        <pin num="11" name="COM_6" type="passive"/>
+        <pin num="12" name="NO_6" type="passive"/>
+        <pin num="13" name="COM_7" type="passive"/>
+        <pin num="14" name="NO_7" type="passive"/>
+        <pin num="15" name="COM_8" type="passive"/>
+        <pin num="16" name="NO_8" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="SamacSys_Parts" part="MCP3304-CI_P">
+      <fields>
+        <field name="Reference">IC</field>
+        <field name="Value">MCP3304-CI_P</field>
+        <field name="Footprint">DIP781W56P254L1918H533Q16N</field>
+        <field name="Description">Microchip MCP3304-CI/P, 13 bit Serial ADC, Differential Input, 16-Pin PDIP</field>
+        <field name="Height">5.334</field>
+        <field name="Mouser Part Number">579-MCP3304-CI/P</field>
+        <field name="Mouser Price/Stock">https://www.mouser.co.uk/ProductDetail/Microchip-Technology/MCP3304-CI-P?qs=2HbNQnvoB68T7LZcGwqiOg%3D%3D</field>
+        <field name="Manufacturer_Name">Microchip</field>
+        <field name="Manufacturer_Part_Number">MCP3304-CI/P</field>
+      </fields>
+      <pins>
+        <pin num="1" name="CH0" type="passive"/>
+        <pin num="2" name="CH1" type="passive"/>
+        <pin num="3" name="CH2" type="passive"/>
+        <pin num="4" name="CH3" type="passive"/>
+        <pin num="5" name="CH4" type="passive"/>
+        <pin num="6" name="CH5" type="passive"/>
+        <pin num="7" name="CH6" type="passive"/>
+        <pin num="8" name="CH7" type="passive"/>
+        <pin num="9" name="DGND" type="passive"/>
+        <pin num="10" name="~{CS}/SHDN" type="passive"/>
+        <pin num="11" name="DIN" type="passive"/>
+        <pin num="12" name="DOUT" type="passive"/>
+        <pin num="13" name="CLK" type="passive"/>
+        <pin num="14" name="AGND" type="passive"/>
+        <pin num="15" name="VREF" type="passive"/>
+        <pin num="16" name="VDD" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="SamacSys_Parts" part="REF3433IDBVR">
+      <docs>http://www.ti.com/lit/ds/symlink/ref3433.pdf</docs>
+      <fields>
+        <field name="Reference">IC</field>
+        <field name="Value">REF3433IDBVR</field>
+        <field name="Footprint">SOT95P280X145-6N</field>
+        <field name="Datasheet">http://www.ti.com/lit/ds/symlink/ref3433.pdf</field>
+        <field name="Description">3.3V Low-Drift Low-Power Small-Footprint Series Voltage Reference</field>
+        <field name="Height">1.45</field>
+        <field name="Mouser Part Number">595-REF3433IDBVR</field>
+        <field name="Mouser Price/Stock">https://www.mouser.co.uk/ProductDetail/Texas-Instruments/REF3433IDBVR?qs=W0yvOO0ixfGBJPqcMgjPbw%3D%3D</field>
+        <field name="Manufacturer_Name">Texas Instruments</field>
+        <field name="Manufacturer_Part_Number">REF3433IDBVR</field>
+      </fields>
+      <pins>
+        <pin num="1" name="GND_F" type="power_in"/>
+        <pin num="2" name="GND_S" type="power_in"/>
+        <pin num="3" name="ENABLE" type="input"/>
+        <pin num="4" name="IN" type="power_in"/>
+        <pin num="5" name="OUT_S" type="output"/>
+        <pin num="6" name="OUT_F" type="output"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Connector_Generic">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Connector_Generic.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Device.kicad_sym</uri>
+    </library>
+    <library logical="SamacSys_Parts">
+      <uri>C:/Users/Oisin/Documents/KiCAD libraries/SamacSys_Parts.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+3.3V">
+      <node ref="C19" pin="2" pintype="passive"/>
+      <node ref="IC3" pin="16" pinfunction="VDD" pintype="passive"/>
+      <node ref="J10" pin="5" pinfunction="Pin_5" pintype="passive"/>
+    </net>
+    <net code="2" name="+5V">
+      <node ref="C21" pin="2" pintype="passive"/>
+      <node ref="IC2" pin="3" pinfunction="ENABLE" pintype="input"/>
+      <node ref="IC2" pin="4" pinfunction="IN" pintype="power_in"/>
+      <node ref="J10" pin="6" pinfunction="Pin_6" pintype="passive"/>
+    </net>
+    <net code="3" name="3V3_ref_NTC_ADC">
+      <node ref="C20" pin="2" pintype="passive"/>
+      <node ref="IC2" pin="5" pinfunction="OUT_S" pintype="output"/>
+      <node ref="IC2" pin="6" pinfunction="OUT_F" pintype="output"/>
+      <node ref="IC3" pin="15" pinfunction="VREF" pintype="passive"/>
+      <node ref="R12" pin="2" pintype="passive"/>
+      <node ref="R13" pin="2" pintype="passive"/>
+      <node ref="R14" pin="2" pintype="passive"/>
+      <node ref="R15" pin="2" pintype="passive"/>
+      <node ref="R16" pin="2" pintype="passive"/>
+      <node ref="R17" pin="2" pintype="passive"/>
+      <node ref="R18" pin="2" pintype="passive"/>
+      <node ref="R19" pin="2" pintype="passive"/>
+    </net>
+    <net code="4" name="ADC_SPI_CLK">
+      <node ref="IC3" pin="13" pinfunction="CLK" pintype="passive"/>
+      <node ref="J10" pin="3" pinfunction="Pin_3" pintype="passive"/>
+    </net>
+    <net code="5" name="ADC_SPI_MISO">
+      <node ref="IC3" pin="12" pinfunction="DOUT" pintype="passive"/>
+      <node ref="J10" pin="2" pinfunction="Pin_2" pintype="passive"/>
+    </net>
+    <net code="6" name="ADC_SPI_MOSI">
+      <node ref="IC3" pin="11" pinfunction="DIN" pintype="passive"/>
+      <node ref="J10" pin="1" pinfunction="Pin_1" pintype="passive"/>
+    </net>
+    <net code="7" name="GNDD">
+      <node ref="C11" pin="2" pintype="passive"/>
+      <node ref="C12" pin="2" pintype="passive"/>
+      <node ref="C13" pin="2" pintype="passive"/>
+      <node ref="C14" pin="2" pintype="passive"/>
+      <node ref="C15" pin="2" pintype="passive"/>
+      <node ref="C16" pin="2" pintype="passive"/>
+      <node ref="C17" pin="2" pintype="passive"/>
+      <node ref="C18" pin="2" pintype="passive"/>
+      <node ref="C19" pin="1" pintype="passive"/>
+      <node ref="C20" pin="1" pintype="passive"/>
+      <node ref="C21" pin="1" pintype="passive"/>
+      <node ref="IC2" pin="1" pinfunction="GND_F" pintype="power_in"/>
+      <node ref="IC2" pin="2" pinfunction="GND_S" pintype="power_in"/>
+      <node ref="IC3" pin="14" pinfunction="AGND" pintype="passive"/>
+      <node ref="IC3" pin="9" pinfunction="DGND" pintype="passive"/>
+      <node ref="J10" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="J9" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J9" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="J9" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="J9" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="J9" pin="5" pinfunction="Pin_5" pintype="passive"/>
+      <node ref="J9" pin="6" pinfunction="Pin_6" pintype="passive"/>
+      <node ref="J9" pin="7" pinfunction="Pin_7" pintype="passive"/>
+      <node ref="J9" pin="8" pinfunction="Pin_8" pintype="passive"/>
+    </net>
+    <net code="8" name="NTC_ADC_CH0">
+      <node ref="C11" pin="1" pintype="passive"/>
+      <node ref="IC3" pin="1" pinfunction="CH0" pintype="passive"/>
+      <node ref="J9" pin="16" pinfunction="Pin_16" pintype="passive"/>
+      <node ref="R12" pin="1" pintype="passive"/>
+    </net>
+    <net code="9" name="NTC_ADC_CH1">
+      <node ref="C12" pin="1" pintype="passive"/>
+      <node ref="IC3" pin="2" pinfunction="CH1" pintype="passive"/>
+      <node ref="J9" pin="15" pinfunction="Pin_15" pintype="passive"/>
+      <node ref="R13" pin="1" pintype="passive"/>
+    </net>
+    <net code="10" name="NTC_ADC_CH2">
+      <node ref="C13" pin="1" pintype="passive"/>
+      <node ref="IC3" pin="3" pinfunction="CH2" pintype="passive"/>
+      <node ref="J9" pin="14" pinfunction="Pin_14" pintype="passive"/>
+      <node ref="R14" pin="1" pintype="passive"/>
+    </net>
+    <net code="11" name="NTC_ADC_CH3">
+      <node ref="C14" pin="1" pintype="passive"/>
+      <node ref="IC3" pin="4" pinfunction="CH3" pintype="passive"/>
+      <node ref="J9" pin="13" pinfunction="Pin_13" pintype="passive"/>
+      <node ref="R15" pin="1" pintype="passive"/>
+    </net>
+    <net code="12" name="NTC_ADC_CH4">
+      <node ref="C15" pin="1" pintype="passive"/>
+      <node ref="IC3" pin="5" pinfunction="CH4" pintype="passive"/>
+      <node ref="J9" pin="12" pinfunction="Pin_12" pintype="passive"/>
+      <node ref="R16" pin="1" pintype="passive"/>
+    </net>
+    <net code="13" name="NTC_ADC_CH5">
+      <node ref="C16" pin="1" pintype="passive"/>
+      <node ref="IC3" pin="6" pinfunction="CH5" pintype="passive"/>
+      <node ref="J9" pin="11" pinfunction="Pin_11" pintype="passive"/>
+      <node ref="R17" pin="1" pintype="passive"/>
+    </net>
+    <net code="14" name="NTC_ADC_CH6">
+      <node ref="C17" pin="1" pintype="passive"/>
+      <node ref="IC3" pin="7" pinfunction="CH6" pintype="passive"/>
+      <node ref="J9" pin="10" pinfunction="Pin_10" pintype="passive"/>
+      <node ref="R18" pin="1" pintype="passive"/>
+    </net>
+    <net code="15" name="NTC_ADC_CH7">
+      <node ref="C18" pin="1" pintype="passive"/>
+      <node ref="IC3" pin="8" pinfunction="CH7" pintype="passive"/>
+      <node ref="J9" pin="9" pinfunction="Pin_9" pintype="passive"/>
+      <node ref="R19" pin="1" pintype="passive"/>
+    </net>
+    <net code="16" name="NTC_ADC_CS">
+      <node ref="IC3" pin="10" pinfunction="~{CS}/SHDN" pintype="passive"/>
+      <node ref="S1" pin="1" pinfunction="COM_1" pintype="passive"/>
+      <node ref="S1" pin="11" pinfunction="COM_6" pintype="passive"/>
+      <node ref="S1" pin="13" pinfunction="COM_7" pintype="passive"/>
+      <node ref="S1" pin="15" pinfunction="COM_8" pintype="passive"/>
+      <node ref="S1" pin="3" pinfunction="COM_2" pintype="passive"/>
+      <node ref="S1" pin="5" pinfunction="COM_3" pintype="passive"/>
+      <node ref="S1" pin="7" pinfunction="COM_4" pintype="passive"/>
+      <node ref="S1" pin="9" pinfunction="COM_5" pintype="passive"/>
+      <node ref="S2" pin="1" pinfunction="COM_1" pintype="passive"/>
+      <node ref="S2" pin="11" pinfunction="COM_6" pintype="passive"/>
+      <node ref="S2" pin="13" pinfunction="COM_7" pintype="passive"/>
+      <node ref="S2" pin="15" pinfunction="COM_8" pintype="passive"/>
+      <node ref="S2" pin="3" pinfunction="COM_2" pintype="passive"/>
+      <node ref="S2" pin="5" pinfunction="COM_3" pintype="passive"/>
+      <node ref="S2" pin="7" pinfunction="COM_4" pintype="passive"/>
+      <node ref="S2" pin="9" pinfunction="COM_5" pintype="passive"/>
+    </net>
+    <net code="17" name="NTC_ADC_CS_00">
+      <node ref="J11" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="S1" pin="2" pinfunction="NO_1" pintype="passive"/>
+    </net>
+    <net code="18" name="NTC_ADC_CS_01">
+      <node ref="J11" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="S1" pin="4" pinfunction="NO_2" pintype="passive"/>
+    </net>
+    <net code="19" name="NTC_ADC_CS_02">
+      <node ref="J11" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="S1" pin="6" pinfunction="NO_3" pintype="passive"/>
+    </net>
+    <net code="20" name="NTC_ADC_CS_03">
+      <node ref="J11" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="S1" pin="8" pinfunction="NO_4" pintype="passive"/>
+    </net>
+    <net code="21" name="NTC_ADC_CS_04">
+      <node ref="J11" pin="5" pinfunction="Pin_5" pintype="passive"/>
+      <node ref="S1" pin="10" pinfunction="NO_5" pintype="passive"/>
+    </net>
+    <net code="22" name="NTC_ADC_CS_05">
+      <node ref="J11" pin="6" pinfunction="Pin_6" pintype="passive"/>
+      <node ref="S1" pin="12" pinfunction="NO_6" pintype="passive"/>
+    </net>
+    <net code="23" name="NTC_ADC_CS_06">
+      <node ref="J11" pin="7" pinfunction="Pin_7" pintype="passive"/>
+      <node ref="S1" pin="14" pinfunction="NO_7" pintype="passive"/>
+    </net>
+    <net code="24" name="NTC_ADC_CS_07">
+      <node ref="J11" pin="8" pinfunction="Pin_8" pintype="passive"/>
+      <node ref="S1" pin="16" pinfunction="NO_8" pintype="passive"/>
+    </net>
+    <net code="25" name="NTC_ADC_CS_08">
+      <node ref="J11" pin="9" pinfunction="Pin_9" pintype="passive"/>
+      <node ref="S2" pin="2" pinfunction="NO_1" pintype="passive"/>
+    </net>
+    <net code="26" name="NTC_ADC_CS_09">
+      <node ref="J11" pin="10" pinfunction="Pin_10" pintype="passive"/>
+      <node ref="S2" pin="4" pinfunction="NO_2" pintype="passive"/>
+    </net>
+    <net code="27" name="NTC_ADC_CS_10">
+      <node ref="J11" pin="11" pinfunction="Pin_11" pintype="passive"/>
+      <node ref="S2" pin="6" pinfunction="NO_3" pintype="passive"/>
+    </net>
+    <net code="28" name="NTC_ADC_CS_11">
+      <node ref="J11" pin="12" pinfunction="Pin_12" pintype="passive"/>
+      <node ref="S2" pin="8" pinfunction="NO_4" pintype="passive"/>
+    </net>
+    <net code="29" name="NTC_ADC_CS_12">
+      <node ref="J11" pin="13" pinfunction="Pin_13" pintype="passive"/>
+      <node ref="S2" pin="10" pinfunction="NO_5" pintype="passive"/>
+    </net>
+    <net code="30" name="NTC_ADC_CS_13">
+      <node ref="J11" pin="14" pinfunction="Pin_14" pintype="passive"/>
+      <node ref="S2" pin="12" pinfunction="NO_6" pintype="passive"/>
+    </net>
+    <net code="31" name="NTC_ADC_CS_14">
+      <node ref="J11" pin="15" pinfunction="Pin_15" pintype="passive"/>
+      <node ref="S2" pin="14" pinfunction="NO_7" pintype="passive"/>
+    </net>
+    <net code="32" name="NTC_ADC_CS_15">
+      <node ref="J11" pin="16" pinfunction="Pin_16" pintype="passive"/>
+      <node ref="S2" pin="16" pinfunction="NO_8" pintype="passive"/>
+    </net>
+  </nets>
+</export>

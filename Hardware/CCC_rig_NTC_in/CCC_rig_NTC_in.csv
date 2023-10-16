@@ -1,0 +1,10 @@
+Reference, Quantity, Value, Footprint, Datasheet, Description, Height, Manufacturer_Name, Manufacturer_Part_Number, Mouser Part Number, Mouser Price/Stock
+C11 C12 C13 C14 C15 C16 C17 C18 C19 C20 ,10,"10 nF","Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder",""
+C21 ,1,"1 uF","Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder",""
+IC2 ,1,"REF3433IDBVR","SamacSys_Parts:SOT95P280X145-6N","http://www.ti.com/lit/ds/symlink/ref3433.pdf","3.3V Low-Drift Low-Power Small-Footprint Series Voltage Reference","1.45","Texas Instruments","REF3433IDBVR","595-REF3433IDBVR","https://www.mouser.co.uk/ProductDetail/Texas-Instruments/REF3433IDBVR?qs=W0yvOO0ixfGBJPqcMgjPbw%3D%3D"
+IC3 ,1,"MCP3304-CI_P","SamacSys_Parts:DIP781W56P254L1918H533Q16N","","Microchip MCP3304-CI/P, 13 bit Serial ADC, Differential Input, 16-Pin PDIP","5.334","Microchip","MCP3304-CI/P","579-MCP3304-CI/P","https://www.mouser.co.uk/ProductDetail/Microchip-Technology/MCP3304-CI-P?qs=2HbNQnvoB68T7LZcGwqiOg%3D%3D"
+J10 ,1,"NTC_ADC_Conn","Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical",""
+J11 ,1,"NTC_ADC_CS_Conn","Connector_PinSocket_2.54mm:PinSocket_2x08_P2.54mm_Vertical",""
+J9 ,1,"NTC_Conn","SamacSys_Parts:43045-16YY_212223",""
+R12 R13 R14 R15 R16 R17 R18 R19 ,8,"6.8k","Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder",""
+S1 S2 ,2,"DS01C-254-S-08BE","SamacSys_Parts:DS01C254S08BE","","DIP Switches / SIP Switches DIP Switch, SPST, 2.54 pitch, raised actuator, covex bottom, Short pin, 8 position, Blue","7","CUI Devices","DS01C-254-S-08BE","490-DS01C-254-S-08BE","https://www.mouser.co.uk/ProductDetail/CUI-Devices/DS01C-254-S-08BE?qs=wnTfsH77Xs7cSHDxhLRJbA%3D%3D"

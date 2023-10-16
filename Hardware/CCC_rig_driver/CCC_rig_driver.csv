@@ -1,0 +1,10 @@
+Reference, Quantity, Value, Footprint, Datasheet, Description, Height, Manufacturer_Name, Manufacturer_Part_Number, Mouser Part Number, Mouser Price/Stock
+C1 C2 C3 C4 C9 C10 C11 C12 ,8,"220uF","Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",""
+C22 C23 C24 C25 C26 C27 C28 C29 ,8,"220uF","Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",""
+IC4 IC5 IC6 IC7 IC8 IC9 IC10 IC11 ,8,"VNH7070ASTR","SamacSys_Parts:SOIC127P600X175-16N-layout","http://www.st.com/content/ccc/resource/technical/document/datasheet/08/97/0a/0c/cf/4b/41/40/DM00213876.pdf/files/DM00213876.pdf/jcr:content/translations/en.DM00213876.pdf","Motor / Motion / Ignition Controllers & Drivers","1.75","STMicroelectronics","VNH7070ASTR","511-VNH7070ASTR","https://www.mouser.co.uk/ProductDetail/STMicroelectronics/VNH7070ASTR?qs=mKNKSX85ZJe3m6X6ucY7IA%3D%3D"
+J6 ,1,"Conn_02x12_Odd_Even","SamacSys_Parts:TE-5530843-1-2x12_edge_connector",""
+J7 J12 ,2,"Conn_02x04_Odd_Even","SamacSys_Parts:Anderson_PCB_mount_P1545_2x4",""
+Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 ,8,"BSS138","Package_TO_SOT_SMD:SOT-23","https://www.onsemi.com/pub/Collateral/BSS138-D.PDF"
+R20 R21 R22 R23 R24 R25 R26 R27 ,8,"8k","Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder",""
+R28 R29 R30 R31 R32 R33 R34 R35 R36 R37 R38 R39 R40 R41 R42 R43 R44 R45 R46 R47 R48 R49 R50 R51 ,24,"1K","Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder",""
+U2 ,1,"Adafruit_815_I2C_PWM_driver","Arduino:MODULE_815",""
