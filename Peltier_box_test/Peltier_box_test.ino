@@ -249,10 +249,10 @@ void loop1() {
         }
         if (*PID_Output[board][driver] >= 0) {                                         //If PID output is positive
           PWM_driver[board]->setPWM((2 * driver), 0, 4096);                            //Set directional output high
-          PWM_driver[board]->setPWM((2 * driver) + 1, 0, *PID_Output[board][driver]);  //Ouput PID calc to PWM output
+          PWM_driver[board]->setPWM((2 * driver) + 1, 0, abs(*PID_Output[board][driver]));  //Ouput PID calc to PWM output
         } else {                                                                       //PID output is negative
           PWM_driver[board]->setPWM((2 * driver), 4096, 0);                            //Set directional output low
-          PWM_driver[board]->setPWM((2 * driver) + 1, 0, *PID_Output[board][driver]);  //Ouput PID calc to PWM output
+          PWM_driver[board]->setPWM((2 * driver) + 1, 0, abs(*PID_Output[board][driver]));  //Ouput PID calc to PWM output
         }
       } else if (!PID[board][driver]->isStopped()) {  //If channel output flag is off, but PID is still running
         PID[board][driver]->stop();                   //Stop PID loop
