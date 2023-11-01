@@ -106,7 +106,7 @@ void interfaceVariable(CommandParameter& Parameters, bool set_status) {
       // new variable
       if (strcmp(variable_cmd, "NTC_RT0") == 0) {
         if (set_status == true) {
-          NTC_RT0[board_idx][channel_idx] = new uint16_t(Parameters.NextParameterAsInteger());
+          *NTC_RT0[board_idx][channel_idx] = Parameters.NextParameterAsInteger();
           Serial.print("NTC_RT0 updated to: ");
         } else if (set_status == false) {
           Serial.print("NTC_RT0 = ");
@@ -116,7 +116,7 @@ void interfaceVariable(CommandParameter& Parameters, bool set_status) {
       // new variable
       else if (strcmp(variable_cmd, "NTC_Beta") == 0) {
         if (set_status == true) {
-          NTC_Beta[board_idx][channel_idx] = new uint16_t(Parameters.NextParameterAsInteger());
+          *NTC_Beta[board_idx][channel_idx] = Parameters.NextParameterAsInteger();
           Serial.print("NTC_Beta updated to: ");
         } else if (set_status == false) {
           Serial.print("NTC_Beta = ");
@@ -126,7 +126,7 @@ void interfaceVariable(CommandParameter& Parameters, bool set_status) {
       // new variable
       else if (strcmp(variable_cmd, "PID_Setpoint") == 0) {
         if (set_status == true) {
-          PID_Setpoint[board_idx][channel_idx] = new double(Parameters.NextParameterAsDouble());
+          *PID_Setpoint[board_idx][channel_idx] = Parameters.NextParameterAsDouble();
           Serial.print("PID_Setpoint updated to: ");
         } else if (set_status == false) {
           Serial.print("PID_Setpoint = ");
@@ -136,7 +136,8 @@ void interfaceVariable(CommandParameter& Parameters, bool set_status) {
       // new variable
       else if (strcmp(variable_cmd, "PID_Output_Min") == 0) {
         if (set_status == true) {
-          PID_Output_Min[board_idx][channel_idx] = new double(Parameters.NextParameterAsDouble());
+          *PID_Output_Min[board_idx][channel_idx] = Parameters.NextParameterAsDouble();
+          //*PID[board_idx][channel_idx]->setOutputRange(*PID_Output_Min[board_idx][channel_idx], *PID_Output_Max[board_idx][channel_idx]);
           Serial.print("PID_Output_Min updated to: ");
         } else if (set_status == false) {
           Serial.print("PID_Output_Min = ");
@@ -146,7 +147,8 @@ void interfaceVariable(CommandParameter& Parameters, bool set_status) {
       // new variable
       else if (strcmp(variable_cmd, "PID_Output_Max") == 0) {
         if (set_status == true) {
-          PID_Output_Max[board_idx][channel_idx] = new double(Parameters.NextParameterAsDouble());
+          *PID_Output_Max[board_idx][channel_idx] = Parameters.NextParameterAsDouble();
+          //*PID[board_idx][channel_idx]->setOutputRange(*PID_Output_Min[board_idx][channel_idx], *PID_Output_Max[board_idx][channel_idx]);
           Serial.print("PID_Output_Max updated to: ");
         } else if (set_status == false) {
           Serial.print("PID_Output_Max = ");
@@ -156,7 +158,8 @@ void interfaceVariable(CommandParameter& Parameters, bool set_status) {
       // new variable
       else if (strcmp(variable_cmd, "PID_KP") == 0) {
         if (set_status == true) {
-          PID_KP[board_idx][channel_idx] = new double(Parameters.NextParameterAsDouble());
+          *PID_KP[board_idx][channel_idx] = Parameters.NextParameterAsDouble();
+          PID[board_idx][channel_idx]->setGains(*PID_KP[board_idx][channel_idx], *PID_KI[board_idx][channel_idx], *PID_KD[board_idx][channel_idx]);
           Serial.print("PID_KP updated to: ");
         } else if (set_status == false) {
           Serial.print("PID_KP = ");
@@ -166,7 +169,8 @@ void interfaceVariable(CommandParameter& Parameters, bool set_status) {
       // new variable
       else if (strcmp(variable_cmd, "PID_KI") == 0) {
         if (set_status == true) {
-          PID_KI[board_idx][channel_idx] = new double(Parameters.NextParameterAsDouble());
+          *PID_KI[board_idx][channel_idx] = Parameters.NextParameterAsDouble();
+          PID[board_idx][channel_idx]->setGains(*PID_KP[board_idx][channel_idx], *PID_KI[board_idx][channel_idx], *PID_KD[board_idx][channel_idx]);
           Serial.print("PID_KI updated to: ");
         } else if (set_status == false) {
           Serial.print("PID_KI = ");
@@ -176,7 +180,8 @@ void interfaceVariable(CommandParameter& Parameters, bool set_status) {
       // new variable
       else if (strcmp(variable_cmd, "PID_KD") == 0) {
         if (set_status == true) {
-          PID_KD[board_idx][channel_idx] = new double(Parameters.NextParameterAsDouble());
+          *PID_KD[board_idx][channel_idx] = Parameters.NextParameterAsDouble();
+          PID[board_idx][channel_idx]->setGains(*PID_KP[board_idx][channel_idx], *PID_KI[board_idx][channel_idx], *PID_KD[board_idx][channel_idx]);
           Serial.print("PID_KD updated to: ");
         } else if (set_status == false) {
           Serial.print("PID_KD = ");
@@ -192,7 +197,7 @@ void interfaceVariable(CommandParameter& Parameters, bool set_status) {
       // new variable
       if (strcmp(variable_cmd, "PWM_driver_address") == 0) {
         if (set_status == true) {
-          PWM_driver_address[board_idx] = new uint8_t(Parameters.NextParameterAsInteger());
+          *PWM_driver_address[board_idx] = Parameters.NextParameterAsInteger();
           Serial.print("PWM_driver_address updated to: ");
         } else if (set_status == false) {
           Serial.print("PWM_driver_address = ");
@@ -202,7 +207,7 @@ void interfaceVariable(CommandParameter& Parameters, bool set_status) {
       // new variable
       else if (strcmp(variable_cmd, "NTC_CS_DIP") == 0) {
         if (set_status == true) {
-          NTC_CS_DIP[board_idx] = new uint8_t(Parameters.NextParameterAsInteger());
+          *NTC_CS_DIP[board_idx] = Parameters.NextParameterAsInteger();
           Serial.print("NTC_CS_DIP updated to: ");
         } else if (set_status == false) {
           Serial.print("NTC_CS_DIP = ");
@@ -212,7 +217,7 @@ void interfaceVariable(CommandParameter& Parameters, bool set_status) {
       // new variable
       else if (strcmp(variable_cmd, "NTC_V_ref") == 0) {
         if (set_status == true) {
-          NTC_V_ref[board_idx] = new double(Parameters.NextParameterAsDouble());
+          *NTC_V_ref[board_idx] = Parameters.NextParameterAsDouble();
           Serial.print("NTC_V_ref updated to: ");
         } else if (set_status == false) {
           Serial.print("NTC_V_ref = ");
